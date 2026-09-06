@@ -1,0 +1,234 @@
+{
+  "v": 12,
+  "name": "GameAchievements",
+  "folders": [],
+  "requests": [
+    {
+      "v": "17",
+      "endpoint": "<<server>>login/",
+      "name": "player-login",
+      "params": [],
+      "headers": [],
+      "method": "POST",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"username\" : \"Sodayooo\",\n  \"password\" : \"030826\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>register/",
+      "name": "player-register",
+      "params": [],
+      "headers": [],
+      "method": "POST",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"username\" : \"Sodayooo\",\n  \"password\" : \"030826\",\n  \"first_name\" : \"Jhezriel Jay\",\n  \"last_name\" : \"Barangan\",\n  \"level\" : 6\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>games/",
+      "name": "games-create",
+      "params": [],
+      "headers": [],
+      "method": "POST",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"title\" : \"Minecraft\",\n  \"publisher\" : \"Mojang\",\n  \"genre\" : \"Sandbox\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>games/",
+      "name": "games-list",
+      "params": [],
+      "headers": [],
+      "method": "GET",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>achievements/",
+      "name": "achievements",
+      "params": [],
+      "headers": [],
+      "method": "POST",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"game_id\" : 1,\n  \"name\" : \"Stone Age\",\n  \"description\" : \"Obtain cobblestone tools\",\n  \"exp_value\" : 10\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>achievements/",
+      "name": "achievements-list",
+      "params": [],
+      "headers": [],
+      "method": "GET",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>player_achievements/",
+      "name": "player-achievements-create",
+      "params": [],
+      "headers": [],
+      "method": "POST",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"player_id\": 1,\n  \"achievement_id\" : 1,\n  \"acquired_date\" : \"2020-01-03\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>player_achievements/",
+      "name": "player-achievements-list",
+      "params": [],
+      "headers": [],
+      "method": "GET",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>player_games/",
+      "name": "player-games-list",
+      "params": [],
+      "headers": [],
+      "method": "GET",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>player_games/",
+      "name": "player-games-create",
+      "params": [],
+      "headers": [],
+      "method": "POST",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"player_id\" : 1,\n  \"game_id\" : 1\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    }
+  ],
+  "headers": [],
+  "auth": {
+    "authType": "none",
+    "authActive": true
+  },
+  "variables": [],
+  "description": "",
+  "preRequestScript": "",
+  "testScript": ""
+}
