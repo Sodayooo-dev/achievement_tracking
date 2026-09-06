@@ -1,5 +1,11 @@
 # 🎮 Game Achievement Management System
 
+Members:
+- Barangan, Jhezriel Jay N.
+- Relucio, Jasmine Angela C.
+- Tabil, Arlene Marie Keith U.
+- Tumaliuan, Miguel Joseph Sean M.
+
 > **Achievement Tracking & Player Progression Platform**  
 > A modular, RESTful backend service built with **Django** and **Django REST Framework** to manage video game catalogs, track unlockable achievements, and power a gamified player leveling and experience (EXP) progression engine.
 
