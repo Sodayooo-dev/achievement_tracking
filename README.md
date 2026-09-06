@@ -102,8 +102,8 @@ The service exposes RESTful endpoints for CRUD operations and query filters acro
 ### Player Profiles & Authentication
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| `POST` | `/api/auth/register/` | Register a new player account |
-| `POST` | `/api/auth/login/` | Authenticate and obtain session/token |
+| `POST` | `/api/register/` | Register a new player account |
+| `POST` | `/api/login/` | Authenticate and obtain session/token |
 
 ### Levels & Progression
 | Method | Endpoint | Description |
