@@ -55,19 +55,26 @@ By separating domains into distinct Django applications, the platform offers an 
 | `title` | `CharField(50)` | Required | Rank title (e.g., `"Novice"`, `"Grandmaster"`) |
 
 #### 2. `player_profiles`
-| Column | Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | `AutoField` | Primary Key | Unique player identifier |
-| `username` | `CharField(100)`| Unique, Required | Player handle / username |
-| `password` | `CharField(100)`| Required | Hashed authentication credential |
-| `email` | `EmailField` | Optional | Player contact email |
-| `first_name` | `CharField(100)`| Optional | Player's given name |
-| `last_name` | `CharField(100)`| Optional | Player's surname |
-| `level` | `ForeignKey` | `levels.Levels`, `ON_DELETE=PROTECT` | Current level rank of the player |
-| `created_at` | `DateTimeField`| Auto add now | Profile creation timestamp |
-| `updated_at` | `DateTimeField`| Auto update now | Last profile update timestamp |
+| Column       | Type | Constraints                          | Description                      |
+|:-------------| :--- |:-------------------------------------|:---------------------------------|
+| `id`         | `AutoField` | Primary Key                          | Unique player identifier         |
+| `username`   | `CharField(100)`| Unique, Required                     | Player handle / username         |
+| `password`   | `CharField(100)`| Required                             | Hashed authentication credential |
+| `email`      | `EmailField` | Optional                             | Player contact email             |
+| `first_name` | `CharField(100)`| Optional                             | Player's given name              |
+| `last_name`  | `CharField(100)`| Optional                             | Player's surname                 |
+| `level`      | `ForeignKey` | `levels.Levels`, `ON_DELETE=PROTECT` | Current level rank of the player |
+| `role`       | `ForeignKey` | `roles.Roles`, `ON_DELETE=PROTECT`   | Current role of the user         |
+| `created_at` | `DateTimeField`| Auto add now                         | Profile creation timestamp       |
+| `updated_at` | `DateTimeField`| Auto update now                      | Last profile update timestamp    |
 
-#### 3. `games`
+#### 3. `roles`
+| Column       | Type             | Constraints | Description                      |
+|:-------------|:-----------------| :--- |:---------------------------------|
+| `id`         | `AutoField`      | Primary Key | Unique player identifier         |
+| `name`       | `CharField(50)`  |  | role name                        |
+
+#### 4. `games`
 | Column | Type | Constraints | Description |
 | :--- | :--- | :--- | :--- |
 | `id` | `AutoField` | Primary Key | Unique game identifier |
@@ -75,7 +82,7 @@ By separating domains into distinct Django applications, the platform offers an 
 | `publisher` | `CharField(100)`| Required | Studio or company publishing the title |
 | `genre` | `CharField(100)`| Required | Categorical classification (e.g., RPG, FPS) |
 
-#### 4. `achievements`
+#### 5. `achievements`
 | Column | Type | Constraints | Description |
 | :--- | :--- | :--- | :--- |
 | `id` | `AutoField` | Primary Key | Unique achievement identifier |
@@ -84,14 +91,14 @@ By separating domains into distinct Django applications, the platform offers an 
 | `exp_value` | `IntegerField` | Required | Experience point reward granted |
 | `game_id` | `ForeignKey` | `games.Games`, `ON_DELETE=PROTECT` | Associated game |
 
-#### 5. `player_games`
+#### 6. `player_games`
 | Column | Type | Constraints | Description |
 | :--- | :--- | :--- | :--- |
 | `id` | `AutoField` | Primary Key | Unique entry identifier |
 | `player_id` | `ForeignKey` | `PlayerProfiles`, `ON_DELETE=PROTECT` | The player who owns/plays the game |
 | `game_id` | `ForeignKey` | `games.Games`, `ON_DELETE=PROTECT` | The game belonging to the player |
 
-#### 6. `player_achievements`
+#### 7. `player_achievements`
 | Column | Type | Constraints | Description |
 | :--- | :--- | :--- | :--- |
 | `id` | `AutoField` | Primary Key | Unique unlock record identifier |
@@ -111,35 +118,41 @@ The service exposes RESTful endpoints for CRUD operations and query filters acro
 | `POST` | `/api/register/` | Register a new player account |
 | `POST` | `/api/login/` | Authenticate and obtain session/token |
 
+### Roles
+| Method | Endpoint          | Description                    |
+| :--- |:------------------|:-------------------------------|
+| `GET` | `/api/roles/`     | List all roles                 |
+| `POST` | `/api/roles/new/` | Create a new role tier (Admin) |
+
 ### Levels & Progression
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/levels/` | List all level thresholds and rank titles |
-| `POST` | `/api/levels/` | Create a new level tier (Admin) |
+| Method | Endpoint           | Description |
+| :--- |:-------------------| :--- |
+| `GET` | `/api/levels/`     | List all level thresholds and rank titles |
+| `POST` | `/api/levels/new/` | Create a new level tier (Admin) |
 
 ### Games Catalog
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/games/` | List all cataloged games |
-| `POST` | `/api/games/` | Add a new game to the catalog |
+| Method | Endpoint          | Description                           |
+| :--- |:------------------|:--------------------------------------|
+| `GET` | `/api/games/`     | List all cataloged games              |
+| `POST` | `/api/games/new/` | Add a new game to the catalog (Admin) |
 
 ### Achievements
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/achievements/` | List all achievements (filterable by `game_id`) |
-| `POST` | `/api/achievements/` | Create a new achievement for a game |
+| Method | Endpoint                 | Description                                     |
+| :--- |:-------------------------|:------------------------------------------------|
+| `GET` | `/api/achievements/`     | List all achievements (filterable by `game_id`) |
+| `POST` | `/api/achievements/new/` | Create a new achievement for a game (Admin)     |
 
 ### Player Games (Library)
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/player-games/` | List player game associations (filterable by `player_id`) |
-| `POST` | `/api/player-games/` | Add a game to a player's library |
+| Method | Endpoint                 | Description                                               |
+| :--- |:-------------------------|:----------------------------------------------------------|
+| `GET` | `/api/player-games/`     | List player game associations (filterable by `player_id`) |
+| `POST` | `/api/player-games/new/` | Add a game to a player's library (Admin)                  |
 
 ### Player Achievements (Unlocked)
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/player-achievements/` | List all unlocked achievements |
-| `POST` | `/api/player-achievements/` | Record an achievement unlock for a player |
+| Method | Endpoint                        | Description                                       |
+| :--- |:--------------------------------|:--------------------------------------------------|
+| `GET` | `/api/player-achievements/`     | List all unlocked achievements                    |
+| `POST` | `/api/player-achievements/new/` | Record an achievement unlock for a player (Admin) |
 
 ---
 
