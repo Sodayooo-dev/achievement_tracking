@@ -108,51 +108,67 @@ By separating domains into distinct Django applications, the platform offers an 
 
 ---
 
-## 🔌 REST API Specification
-
-The service exposes RESTful endpoints for CRUD operations and query filters across all domains:
-
 ### Player Profiles & Authentication
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | `POST` | `/api/register/` | Register a new player account |
-| `POST` | `/api/login/` | Authenticate and obtain session/token |
+| `POST` | `/api/login/` | Authenticate and obtain JWT access & refresh tokens |
+| `PUT` | `/api/<id>/update/` | Update an existing player profile by ID (Admin) |
+| `DELETE` | `/api/<id>/delete/` | Delete a player profile by ID (Admin) |
 
 ### Roles
-| Method | Endpoint          | Description                    |
-| :--- |:------------------|:-------------------------------|
-| `GET` | `/api/roles/`     | List all roles                 |
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/roles/` | List all roles |
 | `POST` | `/api/roles/new/` | Create a new role tier (Admin) |
+| `GET` | `/api/roles/<id>/` | Retrieve role details by ID (Admin) |
+| `PUT` | `/api/roles/<id>/update/` | Update role details by ID (Admin) |
+| `DELETE` | `/api/roles/<id>/delete/` | Delete a role tier by ID (Admin) |
 
 ### Levels & Progression
-| Method | Endpoint           | Description |
-| :--- |:-------------------| :--- |
-| `GET` | `/api/levels/`     | List all level thresholds and rank titles |
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/levels/` | List all level thresholds and rank titles |
 | `POST` | `/api/levels/new/` | Create a new level tier (Admin) |
+| `GET` | `/api/levels/<id>/` | Retrieve level tier details by ID (Admin) |
+| `PUT` | `/api/levels/<id>/update/` | Update a level tier by ID (Admin) |
+| `DELETE` | `/api/levels/<id>/delete/` | Delete a level tier by ID (Admin) |
 
 ### Games Catalog
-| Method | Endpoint          | Description                           |
-| :--- |:------------------|:--------------------------------------|
-| `GET` | `/api/games/`     | List all cataloged games              |
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/games/` | List all cataloged games |
 | `POST` | `/api/games/new/` | Add a new game to the catalog (Admin) |
+| `GET` | `/api/games/<id>/` | Retrieve game details by ID (Admin) |
+| `PUT` | `/api/games/<id>/update/` | Update game details by ID (Admin) |
+| `DELETE` | `/api/games/<id>/delete/` | Delete a game from catalog (Admin) |
 
 ### Achievements
-| Method | Endpoint                 | Description                                     |
-| :--- |:-------------------------|:------------------------------------------------|
-| `GET` | `/api/achievements/`     | List all achievements (filterable by `game_id`) |
-| `POST` | `/api/achievements/new/` | Create a new achievement for a game (Admin)     |
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/achievements/` | List all achievements (filterable by `game_id`) |
+| `POST` | `/api/achievements/new/` | Create a new achievement for a game (Admin) |
+| `GET` | `/api/achievements/<id>/` | Retrieve achievement details by ID (Admin) |
+| `PUT` | `/api/achievements/<id>/update/` | Update achievement details by ID (Admin) |
+| `DELETE` | `/api/achievements/<id>/delete/` | Delete an achievement by ID (Admin) |
 
 ### Player Games (Library)
-| Method | Endpoint                 | Description                                               |
-| :--- |:-------------------------|:----------------------------------------------------------|
-| `GET` | `/api/player-games/`     | List player game associations (filterable by `player_id`) |
-| `POST` | `/api/player-games/new/` | Add a game to a player's library (Admin)                  |
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/player_games/` | List player game associations (filterable by `player_id`) |
+| `POST` | `/api/player_games/new/` | Add a game to a player's library (Admin) |
+| `GET` | `/api/player_games/<id>/` | Retrieve player game association details by ID (Admin) |
+| `PUT` | `/api/player_games/<id>/update/` | Update a player game association by ID (Admin) |
+| `DELETE` | `/api/player_games/<id>/delete/` | Remove a game from a player's library by ID (Admin) |
 
 ### Player Achievements (Unlocked)
-| Method | Endpoint                        | Description                                       |
-| :--- |:--------------------------------|:--------------------------------------------------|
-| `GET` | `/api/player-achievements/`     | List all unlocked achievements                    |
-| `POST` | `/api/player-achievements/new/` | Record an achievement unlock for a player (Admin) |
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/player_achievements/` | List all unlocked achievements |
+| `POST` | `/api/player_achievements/new/` | Record an achievement unlock for a player (Admin) |
+| `GET` | `/api/player_achievements/<id>/` | Retrieve unlocked achievement record details by ID (Admin) |
+| `PUT` | `/api/player_achievements/<id>/update/` | Update an unlocked achievement record by ID (Admin) |
+| `DELETE` | `/api/player_achievements/<id>/delete/` | Delete an achievement unlock record by ID (Admin) |
 
 ---
 
@@ -197,7 +213,8 @@ Apply the existing migrations to build the database schema:
 python manage.py makemigrations
 python manage.py migrate
 ```
-Start the Development Server
+
+4. **Start the Development Server**
    ```bash
    python manage.py runserver
    ```
