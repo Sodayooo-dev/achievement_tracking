@@ -39,7 +39,51 @@
       },
       "body": {
         "contentType": "application/json",
-        "body": "{\n  \"username\" : \"Sodayooo\",\n  \"password\" : \"030826\",\n  \"first_name\" : \"Jhezriel Jay\",\n  \"last_name\" : \"Barangan\",\n  \"level\" : 6,\n  \"role\" : 2\n}"
+        "body": "{\n  \"username\" : \"Sodayooo\",\n  \"password\" : \"030826\",\n  \"first_name\" : \"Jhezriel Jay\",\n  \"last_name\" : \"Barangan\",\n  \"level\" : 6,\n  \"role\" : 1\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>1/update/",
+      "name": "player-update",
+      "params": [],
+      "headers": [],
+      "method": "PUT",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": ""
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"username\" : \"Soda\",\n  \"password\" : \"030826\",\n  \"first_name\" : \"Jhezriel Jay\",\n  \"last_name\" : \"Barangan\",\n  \"level\" : 6,\n  \"role\" : 1\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>2/delete/",
+      "name": "player-delete",
+      "params": [],
+      "headers": [],
+      "method": "DELETE",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": ""
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": "application/json",
+        "body": ""
       },
       "requestVariables": [],
       "responses": {},
@@ -91,6 +135,50 @@
     },
     {
       "v": "17",
+      "endpoint": "<<server>>games/1/update/",
+      "name": "games-update",
+      "params": [],
+      "headers": [],
+      "method": "PUT",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": ""
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"title\" : \"Minecraft\",\n  \"publisher\" : \"Mojang\",\n  \"genre\" : \"Sandbox\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>games/1/delete/",
+      "name": "games-delete",
+      "params": [],
+      "headers": [],
+      "method": "DELETE",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": ""
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"title\" : \"Minecraft\",\n  \"publisher\" : \"Mojang\",\n  \"genre\" : \"Sandbox\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
       "name": "achievements",
       "method": "POST",
       "endpoint": "<<server>>achievements/new/",
@@ -125,6 +213,50 @@
         "token": "",
         "authActive": true
       },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>achievements/1/update/",
+      "name": "achievements-update",
+      "params": [],
+      "headers": [],
+      "method": "PUT",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": ""
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"game_id\" : 1,\n  \"name\" : \"Stone Age\",\n  \"description\" : \"Obtain cobblestone tools\",\n  \"exp_value\" : 10\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>achievements/1/delete/",
+      "name": "achievements-delete",
+      "params": [],
+      "headers": [],
+      "method": "DELETE",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": ""
+      },
+      "preRequestScript": "",
+      "testScript": "",
       "body": {
         "contentType": null,
         "body": null
@@ -179,6 +311,72 @@
     },
     {
       "v": "17",
+      "endpoint": "<<server>>player_achievements/1/update/",
+      "name": "player-achievements-update",
+      "params": [],
+      "headers": [],
+      "method": "PUT",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": ""
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"player_id\": 1,\n  \"achievement_id\" : 1,\n  \"acquired_date\" : \"2020-01-03\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "endpoint": "<<server>>player_achievements/1/delete/",
+      "name": "player-achievements-delete",
+      "params": [],
+      "headers": [],
+      "method": "DELETE",
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": ""
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"player_id\": 1,\n  \"achievement_id\" : 1,\n  \"acquired_date\" : \"2020-01-03\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "player-games-create",
+      "method": "POST",
+      "endpoint": "<<server>>player_games/new/",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"player_id\" : 1,\n  \"game_id\" : 1\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
       "name": "player-games-list",
       "method": "GET",
       "endpoint": "<<server>>player_games/",
@@ -201,9 +399,31 @@
     },
     {
       "v": "17",
-      "name": "player-games-create",
-      "method": "POST",
-      "endpoint": "<<server>>player_games/new/",
+      "name": "player-games-update",
+      "method": "PUT",
+      "endpoint": "<<server>>player_games/1/update/",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"player_id\" : 1,\n  \"game_id\" : 1\n}"
+      },
+      "requestVariables": [],
+      "responses": {},
+      "description": null
+    },
+    {
+      "v": "17",
+      "name": "player-games-delete",
+      "method": "DELETE",
+      "endpoint": "<<server>>player_games/1/delete/",
       "params": [],
       "headers": [],
       "preRequestScript": "",

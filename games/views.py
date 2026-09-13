@@ -29,8 +29,39 @@ class GamesCreate(APIView):
 
 class GamesDetail(APIView):
     permission_classes = [IsAdmin]
-    def get(self,request,pk):
+    def get(self, request, pk):
         try:
             game = Games.objects.get(pk=pk)
         except Games.DoesNotExist:
-            return None
+            return Response(
+                data={'message': 'Game does not exist'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        serializer = GameSerializer(game)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class GamesUpdate(APIView):
+    permission_classes = [IsAdmin]
+    def put(self,request,pk):
+        try:
+            game = Games.objects.get(pk=pk)
+        except Games.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = GameSerializer(game, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(
+            data=serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+class GamesDelete(APIView):
+    permission_classes = [IsAdmin]
+    def delete(self,request,pk):
+        try:
+            game = Games.objects.get(pk=pk)
+        except Games.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        game.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

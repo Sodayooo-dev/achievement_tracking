@@ -32,3 +32,31 @@ class AchievementsDetail(APIView):
             achievement = Achievements.objects.get(pk=pk)
         except Achievements.DoesNotExist:
             return None
+
+class AchievementsUpdate(APIView):
+    permission_classes = [IsAdmin]
+    def put(self,request,pk):
+        try:
+            achievement = Achievements.objects.get(pk=pk)
+        except Achievements.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = AchievementsSerializer(achievement, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(
+            data=serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+class AchievementsDelete(APIView):
+    permission_classes = [IsAdmin]
+    def delete(self,request,pk):
+        try:
+            achievement = Achievements.objects.get(pk=pk)
+        except Achievements.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        achievement.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+

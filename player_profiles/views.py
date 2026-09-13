@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from player_profiles.models import PlayerProfiles
+from player_profiles.permissions import IsAdmin
 from player_profiles.serializers import PlayerProfileSerializer
 
 
@@ -56,3 +58,42 @@ class PlayerProfileRegister(APIView):
             data = serializer.errors,
             status = status.HTTP_400_BAD_REQUEST
         )
+
+class PlayerProfileUpdate(APIView):
+    permission_classes = [IsAdmin]
+    def put(self, request,pk):
+        try:
+            profile = PlayerProfiles.objects.get(pk=pk)
+        except PlayerProfiles.DoesNotExist:
+            return Response(
+                data = {'message': 'Player profile does not exist'},
+                status = status.HTTP_404_NOT_FOUND
+            )
+        serializer = PlayerProfileSerializer(instance=profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                data = serializer.data,
+                status = status.HTTP_200_OK
+            )
+        return Response(
+            data = serializer.errors,
+            status = status.HTTP_400_BAD_REQUEST
+        )
+
+class PlayerProfileDelete(APIView):
+    permission_classes = [IsAdmin]
+    def delete(self, request,pk):
+        try:
+            profile = PlayerProfiles.objects.get(pk=pk)
+        except PlayerProfiles.DoesNotExist:
+            return Response(
+                data = {'message': 'Player profile does not exist'},
+                status = status.HTTP_404_NOT_FOUND
+            )
+        profile.delete()
+        return Response(
+            data = {'message': 'Player profile deleted'},
+            status = status.HTTP_200_OK
+        )
+

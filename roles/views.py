@@ -32,3 +32,32 @@ class RolesDetail(APIView):
             roles = Roles.objects.all()
         except Roles.DoesNotExist:
             return None
+
+class RolesUpdate(APIView):
+    permission_classes = [IsAdmin]
+    def put(self, request, format=None):
+        try:
+            roles = Roles.objects.all()
+        except Roles.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = RoleSerializer(roles, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                data=serializer.data,
+                status=status.HTTP_200_OK
+            )
+        return Response(
+            data=serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+class RolesDelete(APIView):
+    permission_classes = [IsAdmin]
+    def delete(self, request, format=None):
+        try:
+            roles = Roles.objects.all()
+        except Roles.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        roles.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
