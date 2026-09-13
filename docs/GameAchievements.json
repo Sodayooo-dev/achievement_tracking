@@ -5,17 +5,17 @@
   "requests": [
     {
       "v": "17",
-      "endpoint": "<<server>>login/",
       "name": "player-login",
+      "method": "POST",
+      "endpoint": "<<server>>login/",
       "params": [],
       "headers": [],
-      "method": "POST",
+      "preRequestScript": "",
+      "testScript": "",
       "auth": {
         "authType": "inherit",
         "authActive": true
       },
-      "preRequestScript": "",
-      "testScript": "",
       "body": {
         "contentType": "application/json",
         "body": "{\n  \"username\" : \"Sodayooo\",\n  \"password\" : \"030826\"\n}"
@@ -26,20 +26,20 @@
     },
     {
       "v": "17",
-      "endpoint": "<<server>>register/",
       "name": "player-register",
+      "method": "POST",
+      "endpoint": "<<server>>register/",
       "params": [],
       "headers": [],
-      "method": "POST",
+      "preRequestScript": "",
+      "testScript": "",
       "auth": {
         "authType": "inherit",
         "authActive": true
       },
-      "preRequestScript": "",
-      "testScript": "",
       "body": {
         "contentType": "application/json",
-        "body": "{\n  \"username\" : \"Sodayooo\",\n  \"password\" : \"030826\",\n  \"first_name\" : \"Jhezriel Jay\",\n  \"last_name\" : \"Barangan\",\n  \"level\" : 6\n}"
+        "body": "{\n  \"username\" : \"Sodayooo\",\n  \"password\" : \"030826\",\n  \"first_name\" : \"Jhezriel Jay\",\n  \"last_name\" : \"Barangan\",\n  \"level\" : 6,\n  \"role\" : 2\n}"
       },
       "requestVariables": [],
       "responses": {},
@@ -47,18 +47,18 @@
     },
     {
       "v": "17",
-      "endpoint": "<<server>>games/",
       "name": "games-create",
+      "method": "POST",
+      "endpoint": "<<server>>games/new/",
       "params": [],
       "headers": [],
-      "method": "POST",
-      "auth": {
-        "authType": "bearer",
-        "authActive": true,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
-      },
       "preRequestScript": "",
       "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "",
+        "authActive": true
+      },
       "body": {
         "contentType": "application/json",
         "body": "{\n  \"title\" : \"Minecraft\",\n  \"publisher\" : \"Mojang\",\n  \"genre\" : \"Sandbox\"\n}"
@@ -69,18 +69,18 @@
     },
     {
       "v": "17",
-      "endpoint": "<<server>>games/",
       "name": "games-list",
+      "method": "GET",
+      "endpoint": "<<server>>games/",
       "params": [],
       "headers": [],
-      "method": "GET",
-      "auth": {
-        "authType": "bearer",
-        "authActive": true,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
-      },
       "preRequestScript": "",
       "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "",
+        "authActive": true
+      },
       "body": {
         "contentType": null,
         "body": null
@@ -91,18 +91,18 @@
     },
     {
       "v": "17",
-      "endpoint": "<<server>>achievements/",
       "name": "achievements",
+      "method": "POST",
+      "endpoint": "<<server>>achievements/new/",
       "params": [],
       "headers": [],
-      "method": "POST",
-      "auth": {
-        "authType": "bearer",
-        "authActive": true,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
-      },
       "preRequestScript": "",
       "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "",
+        "authActive": true
+      },
       "body": {
         "contentType": "application/json",
         "body": "{\n  \"game_id\" : 1,\n  \"name\" : \"Stone Age\",\n  \"description\" : \"Obtain cobblestone tools\",\n  \"exp_value\" : 10\n}"
@@ -113,18 +113,18 @@
     },
     {
       "v": "17",
-      "endpoint": "<<server>>achievements/",
       "name": "achievements-list",
+      "method": "GET",
+      "endpoint": "<<server>>achievements/",
       "params": [],
       "headers": [],
-      "method": "GET",
-      "auth": {
-        "authType": "bearer",
-        "authActive": true,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
-      },
       "preRequestScript": "",
       "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "",
+        "authActive": true
+      },
       "body": {
         "contentType": null,
         "body": null
@@ -135,18 +135,18 @@
     },
     {
       "v": "17",
-      "endpoint": "<<server>>player_achievements/",
       "name": "player-achievements-create",
+      "method": "POST",
+      "endpoint": "<<server>>player_achievements/new/",
       "params": [],
       "headers": [],
-      "method": "POST",
-      "auth": {
-        "authType": "bearer",
-        "authActive": true,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
-      },
       "preRequestScript": "",
       "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "",
+        "authActive": true
+      },
       "body": {
         "contentType": "application/json",
         "body": "{\n  \"player_id\": 1,\n  \"achievement_id\" : 1,\n  \"acquired_date\" : \"2020-01-03\"\n}"
@@ -157,18 +157,18 @@
     },
     {
       "v": "17",
-      "endpoint": "<<server>>player_achievements/",
       "name": "player-achievements-list",
+      "method": "GET",
+      "endpoint": "<<server>>player_achievements/",
       "params": [],
       "headers": [],
-      "method": "GET",
-      "auth": {
-        "authType": "bearer",
-        "authActive": true,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
-      },
       "preRequestScript": "",
       "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "",
+        "authActive": true
+      },
       "body": {
         "contentType": null,
         "body": null
@@ -179,18 +179,18 @@
     },
     {
       "v": "17",
-      "endpoint": "<<server>>player_games/",
       "name": "player-games-list",
+      "method": "GET",
+      "endpoint": "<<server>>player_games/",
       "params": [],
       "headers": [],
-      "method": "GET",
-      "auth": {
-        "authType": "bearer",
-        "authActive": true,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
-      },
       "preRequestScript": "",
       "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "",
+        "authActive": true
+      },
       "body": {
         "contentType": null,
         "body": null
@@ -201,18 +201,18 @@
     },
     {
       "v": "17",
-      "endpoint": "<<server>>player_games/",
       "name": "player-games-create",
+      "method": "POST",
+      "endpoint": "<<server>>player_games/new/",
       "params": [],
       "headers": [],
-      "method": "POST",
-      "auth": {
-        "authType": "bearer",
-        "authActive": true,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4NzA0ODQ2LCJpYXQiOjE3ODg3MDMwNDYsImp0aSI6ImFjOTQ0NzRmZDI3YTQxNmZiMjk2MjdhNTAzYzNkMmZhIiwidXNlcl9pZCI6IjEifQ.-VbhhyFkVnha_FEQi4bsCYquKLnmD1n_7BfIHp8y-QY"
-      },
       "preRequestScript": "",
       "testScript": "",
+      "auth": {
+        "authType": "bearer",
+        "token": "",
+        "authActive": true
+      },
       "body": {
         "contentType": "application/json",
         "body": "{\n  \"player_id\" : 1,\n  \"game_id\" : 1\n}"
@@ -222,11 +222,11 @@
       "description": null
     }
   ],
-  "headers": [],
   "auth": {
     "authType": "none",
     "authActive": true
   },
+  "headers": [],
   "variables": [],
   "description": "",
   "preRequestScript": "",
