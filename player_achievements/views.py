@@ -4,14 +4,17 @@ from rest_framework.views import APIView
 
 from player_achievements.models import PlayerAchievements
 from player_achievements.serializers import PlayerAchievementsSerializer
+from player_profiles.permissions import IsAdmin
 
 
-class PlayerAchievementsListCreate(APIView):
+class PlayerAchievementsList(APIView):
     def get(self,request):
         achievements = PlayerAchievements.objects.all()
         serializer = PlayerAchievementsSerializer(achievements, many=True)
         return Response(serializer.data)
 
+class PlayerAchievementsCreate(APIView):
+    permission_classes = [IsAdmin]
     def post(self,request):
         serializer = PlayerAchievementsSerializer(data=request.data)
         if serializer.is_valid():
@@ -21,3 +24,11 @@ class PlayerAchievementsListCreate(APIView):
             data=serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+class PlayerAchievementsDetail(APIView):
+    permission_classes = [IsAdmin]
+    def get(self,request,pk):
+        try:
+            achievements = PlayerAchievements.objects.get(pk=pk)
+        except PlayerAchievements.DoesNotExist:
+            return None

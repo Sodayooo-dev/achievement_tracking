@@ -2,12 +2,17 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from levels.models import Levels
+from roles.models import Roles
 
 
 # Create your models here.
 class PlayerProfiles(AbstractUser):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=100, unique=True)
+    role = models.ForeignKey(
+        Roles,
+        on_delete=models.PROTECT
+    )
     password = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
