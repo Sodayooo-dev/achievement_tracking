@@ -1,0 +1,57 @@
+.frontloader-machine {
+  width: min(560px, 100%);
+  height: auto;
+  flex-shrink: 1;
+  min-height: 0;
+}
+.frontloader-illustration {
+  display: block;
+  width: 100%;
+  max-height: 280px;
+  overflow: visible;
+}
+.frontloader-cartridge {
+  will-change: transform;
+  transform-box: view-box;
+}
+.save-reading-note {
+  color: #b9c3ac;
+  font-size: 12px;
+}
+.insertion-game-title {
+  color: #eeeade;
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+  max-width: 90%;
+  line-height: 1.3;
+}
+.cartridge-sequence .boot-progress > span {
+  animation: none;
+  width: 0;
+}
+@media (max-width: 767px) {
+  .frontloader-machine {
+    width: 100%;
+  }
+  .frontloader-illustration {
+    max-height: 190px;
+  }
+  .insertion-game-title {
+    font-size: 16px;
+  }
+}
+@media (max-height: 550px) {
+  .cartridge-sequence .frontloader-machine {
+    zoom: 1;
+  }
+  .frontloader-illustration {
+    max-height: 120px;
+  }
+  .insertion-game-title {
+    font-size: 12px;
+  }
+  .cartridge-sequence .skip-insertion {
+    min-height: 32px;
+  }
+}
