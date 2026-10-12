@@ -1,7 +1,2 @@
-.venv
-.idea
-*.sqlite3
-*.env
+implementation_plan.md
 
-# Egnoree ol migrations/0** initial.py :)
-**/**/**0**.py
