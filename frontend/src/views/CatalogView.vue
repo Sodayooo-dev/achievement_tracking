@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import { useCatalog } from '@/stores/catalog'
 import { usePlayer } from '@/stores/player'
-import PixelIcon from '@/components/ui/PixelIcon.vue'
+import GameArtwork from '@/components/ui/GameArtwork.vue'
 import { genreToTheme } from '@/lib/genre'
 const catalog = useCatalog(),
   player = usePlayer(),
@@ -51,7 +51,9 @@ function clearFilters() {
       >
         <div class="catalog-art">
           <span>{{ game.genre }}</span
-          ><PixelIcon :name="game.title" /><small>CH–{{ String(game.id).padStart(3, '0') }}</small>
+          ><GameArtwork :title="game.title" :url="game.image_url" /><small
+            >CH–{{ String(game.id).padStart(3, '0') }}</small
+          >
         </div>
         <div class="catalog-body">
           <p class="eyebrow">{{ game.publisher }}</p>

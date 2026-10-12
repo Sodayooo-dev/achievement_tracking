@@ -1,0 +1,14 @@
+{
+  "Minecraft": {
+    "image_url": "https://store-images.s-microsoft.com/image/apps.42664.13510798885735219.3576178f-5830-46af-9837-7194db7781e8.b3e584ef-cdd4-4e1c-ad75-beebd48b7018",
+    "source": "https://displaycatalog.mp.microsoft.com/v7.0/products?bigIds=9NBLGGH2JHXJ&market=US&languages=en-us"
+  },
+  "Gran Turismo 7": {
+    "image_url": "https://image.api.playstation.com/vulcan/ap/rnd/202511/0707/303f5701426596a09891f9f33fa93e49ae522d5295b26dce.png",
+    "source": "https://www.playstation.com/en-us/games/gran-turismo-7/"
+  },
+  "Mobile Legends": {
+    "image_url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/d9/88/76/d9887647-00fd-09c8-8a61-c6c31a1bfe2a/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/512x512bb.jpg",
+    "source": "https://itunes.apple.com/search?term=mobile%20legends%20bang%20bang&entity=software&limit=10&country=sg"
+  }
+}

@@ -1,0 +1,55 @@
+.game-artwork {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+.game-artwork img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cartridge-label .game-artwork {
+  margin: 14px 0;
+}
+.cartridge-label .game-artwork.has-artwork {
+  aspect-ratio: 460 / 215;
+  overflow: hidden;
+  border: 1px solid currentColor;
+  background: #1e1b18;
+}
+.cartridge-label .game-artwork:not(.has-artwork) {
+  justify-content: flex-start;
+}
+.cartridge-label .game-artwork .pixel-icon {
+  margin: 8px 0;
+}
+.catalog-art .game-artwork {
+  width: 100%;
+}
+.catalog-art .game-artwork.has-artwork {
+  aspect-ratio: 460 / 215;
+}
+.catalog-art {
+  gap: 12px;
+}
+.game-image-preview {
+  grid-column: 1 / -1;
+  max-width: 360px;
+  width: 100%;
+}
+.game-image-preview .game-artwork.has-artwork {
+  aspect-ratio: 460 / 215;
+  border: 1px solid #8c867b;
+}
+.game-image-preview p {
+  font-size: 12px;
+  color: #696358;
+  margin-top: 8px;
+}
+@media (max-width: 767px) {
+  .cartridge-label .game-artwork {
+    margin: 12px 0;
+  }
+}

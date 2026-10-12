@@ -1,0 +1,1568 @@
+{
+  "Minecraft": {
+    "source": "https://wiki.ronlab.site/content/minecraftwiki_en_all_maxi_2025-11/Achievement",
+    "rows": [
+      [
+        "",
+        "",
+        "Awarded all trophies",
+        "All trophies have been awarded.",
+        "Automatically obtained when the first 50\u200c trophies have been obtained.",
+        "\u2014",
+        "Platinum",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Music to my Ears",
+        "Play a music disc in a Jukebox.",
+        "\u2014",
+        "\u2014",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Change of Sheets",
+        "Dye your bed a different color.",
+        "\u2014",
+        "\u2014",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Taking Inventory",
+        "Open your  inventory .",
+        "\u2014",
+        "10",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Getting Wood",
+        "Punch a  tree  until a block of wood pops out.",
+        "Pick up a  log  from the ground.",
+        "10",
+        "Bronze",
+        "\"Lumberjack Shirt\" top"
+      ],
+      [
+        "",
+        "",
+        "Benchmaking",
+        "Craft a  workbench  with four blocks of wooden  planks .",
+        "Pick up a  crafting table  from the inventory's crafting field output or a crafting table output.",
+        "10",
+        "Bronze",
+        "\"Tool Belt Trousers\" bottom"
+      ],
+      [
+        "",
+        "",
+        "Time to Mine!",
+        "Use planks and sticks to make a  pickaxe .",
+        "Pick up a wooden  pickaxe  from a  crafting table  output.",
+        "10",
+        "Bronze",
+        "\"Miner Headband\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Time to Strike!",
+        "Use planks and sticks to make a sword.",
+        "Pick up any type of  sword  from a  crafting table  output.",
+        "10",
+        "Bronze",
+        "\"Dummy Top\" top"
+      ],
+      [
+        "",
+        "",
+        "Monster Hunter",
+        "Attack and destroy a monster.",
+        "Kill  one  of these 37/41\u200b [  upcoming   Mounts of Mayhem  ]  hostile  monsters : \n  \n            Blaze    \n           Bogged    \n           Breeze    \n           Camel Husk   \u200b [  upcoming   Mounts of Mayhem  ]  \n           Cave Spider    \n           Creaking    (by destroying its  creaking heart ) \n           Creeper    \n           Drowned    \n           Elder Guardian    \n           Ender Dragon    \n           Enderman    \n           Endermite    \n           Evoker    \n           Ghast    \n           Guardian    \n           Hoglin    \n           Husk    \n           Magma Cube    \n           Parched   \u200b [  upcoming   Mounts of Mayhem  ]  \n           Phantom    \n           Piglin    \n           Piglin Brute    \n           Pillager    \n           Ravager    \n           Shulker    \n           Silverfish    \n           Skeleton    \n           Slime    \n           Spider    \n           Stray    \n           Vex    \n           Vindicator    \n           Witch    \n           Wither    \n           Wither Skeleton    \n           Zoglin    \n           Zombie    \n           Zombie Horse   \u200b [  upcoming   Mounts of Mayhem  ]  \n           Zombie Nautilus   \u200b [  upcoming   Mounts of Mayhem  ]  \n           Zombie Villager    \n           Zombified Piglin     \n \n \n \nOther mobs may be killed, but are ignored for this achievement.",
+        "15",
+        "Bronze",
+        "\"Victor's Tunic\" top"
+      ],
+      [
+        "",
+        "",
+        "Getting an Upgrade",
+        "Construct a better pickaxe.",
+        "Pick up a stone  pickaxe  from a  crafting table  output.",
+        "15",
+        "Bronze",
+        "\"Shiny Shirt\" top"
+      ],
+      [
+        "",
+        "",
+        "MOAR Tools",
+        "Construct one type of each tool.",
+        "Construct one  pickaxe , one  shovel , one  axe , and one  hoe  with the same material.",
+        "15",
+        "Bronze",
+        "\"Hotbar Hat\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Hot Topic",
+        "Construct a furnace out of eight cobblestone blocks.",
+        "Pick up a  furnace  from a  crafting table  output.",
+        "15",
+        "Bronze",
+        "\"Furnace Mask\" face item"
+      ],
+      [
+        "",
+        "",
+        "Renewable Energy",
+        "Smelt wood trunks using charcoal to make more charcoal.",
+        "Smelt a wooden  log  with  charcoal  as the fuel.",
+        "10",
+        "Bronze",
+        "\"Wind Turbine\" back item"
+      ],
+      [
+        "",
+        "",
+        "Pork Chop",
+        "Cook and eat a  pork chop .",
+        "\u2014",
+        "10",
+        "Bronze",
+        "\"Porkchop Munching\" face item"
+      ],
+      [
+        "",
+        "",
+        "Adventuring Time",
+        "Discover 17 biomes.",
+        "Visit any 17 biomes. Does not have to be in a single world.",
+        "40",
+        "Silver",
+        "\"The Pickaxe\" emote"
+      ],
+      [
+        "",
+        "",
+        "Passing the Time",
+        "Play for 100 days.",
+        "Play for 100  Minecraft  days, which is roughly equivalent to 33 hours in real time (if the player has not slept).",
+        "20",
+        "Bronze",
+        "\"Very Long Hair\" hair"
+      ],
+      [
+        "",
+        "",
+        "On A Rail",
+        "Travel by minecart to a point at least 500m in a single direction from where you started.",
+        "Travel by  minecart  500 blocks in a straight line away from the player's starting point.",
+        "40",
+        "Gold",
+        "\"Conductor Hat\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Trampoline",
+        "Bounce 30 blocks upward off a  slime block .",
+        "\u2014",
+        "15",
+        "Bronze",
+        "\"Slime\" base"
+      ],
+      [
+        "",
+        "",
+        "Caves and Cliffs",
+        "Freefall from the top of the world (build limit) to the bottom of the world and survive.",
+        "\u2014",
+        "30",
+        "Gold",
+        "\"Bucket Boot\" footwear"
+      ],
+      [
+        "",
+        "",
+        "Sound of Music",
+        "Make the  Meadows  come alive with the sound of music from a  jukebox .",
+        "Use  a  music disc  on a jukebox in the Meadow biome.",
+        "10",
+        "Bronze",
+        "\"Floral Tunes\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Acquire Hardware",
+        "Smelt an iron ingot",
+        "Pick up an  iron ingot  from a  furnace  output.",
+        "15",
+        "Bronze",
+        "\"The Hammer\u201d emote"
+      ],
+      [
+        "",
+        "",
+        "DIAMONDS!",
+        "Acquire diamonds with your iron tools.",
+        "Pick up a  diamond  from the ground.",
+        "20",
+        "Bronze",
+        "\"DIAMOND CROWN\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Diamonds to you!",
+        "Throw diamonds at another player.",
+        "Drop  a diamond. Another player must then pick up this diamond.",
+        "15",
+        "Bronze",
+        "\"Silly\" emote"
+      ],
+      [
+        "",
+        "",
+        "Chestful of Cobblestone",
+        "Mine 1,728 Cobblestone and place it in a chest.",
+        "A player must open a chest that contains 27 stacks of  cobblestone .",
+        "20",
+        "Bronze",
+        "\"Cobblestone\" base"
+      ],
+      [
+        "",
+        "",
+        "Super Fuel",
+        "Power a  Furnace  with Lava",
+        "Smelt an item using a lava bucket on a  furnace ,  blast furnace  or  smoker  and pick up the resulting item from the output slot.",
+        "20",
+        "Bronze",
+        "\"Energy Pack\" back item"
+      ],
+      [
+        "",
+        "",
+        "Time to Farm!",
+        "Make a Hoe.",
+        "Pick up any type of  hoe  from a  crafting table  output.",
+        "10",
+        "Bronze",
+        "\"Wheat Toothpick\" face item"
+      ],
+      [
+        "",
+        "",
+        "Repopulation",
+        "Breed two cows with wheat.",
+        "Breed two  cows  or two  mooshrooms .",
+        "15",
+        "Bronze",
+        "\"Cowbell Necklace\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Cow Tipper",
+        "Harvest some leather.",
+        "Pick up  leather  from the ground or via  fishing .",
+        "15",
+        "Bronze",
+        "\"Faceplant\" emote"
+      ],
+      [
+        "",
+        "",
+        "When Pigs Fly",
+        "Use a saddle to ride a pig, and then have the pig get hurt from fall damage while riding it.",
+        "Be riding a pig (e.g. using a  saddle ) when it hits the ground with a fall distance greater than 5.",
+        "40",
+        "Silver",
+        "\"Winged Pig Boots\" footwear"
+      ],
+      [
+        "",
+        "",
+        "Leader of the Pack",
+        "Befriend five  wolves .",
+        "Note: This does not have to be in a single game, so multiple games or reloading old saves does count toward this achievement.",
+        "20",
+        "Bronze",
+        "\"Wolf Mask\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Have a Shearful Day",
+        "Use  Shears  to obtain  wool  from a  sheep .",
+        "\u2014",
+        "15",
+        "Bronze",
+        "\"Wooled\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Rainbow Collection",
+        "Gather all 16 colors of  wool .",
+        "All the colors of wool do not have to be in the inventory at the same time, but must have been picked up by the player at least once.",
+        "30",
+        "Silver",
+        "\"Rainbow Sweater\" top"
+      ],
+      [
+        "",
+        "",
+        "Artificial Selection",
+        "Breed a  mule  from a  horse  and a  donkey .",
+        "\u2014",
+        "30",
+        "Bronze",
+        "\"Horse Mask\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Bee our guest",
+        "Use a  Campfire  to collect Honey from a  Beehive  using a Bottle without aggravating the  bees .",
+        "\u2014",
+        "15",
+        "Bronze",
+        "\"Honey Pot\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Total Beelocation",
+        "Move and place a  Bee Nest , with 3 bees inside, using  Silk Touch .",
+        "\u2014",
+        "30",
+        "Silver",
+        "\"Beekeeper Hat\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Sticky Situation",
+        "Slide down a  honey block  to slow your fall.",
+        "\u2014",
+        "30",
+        "Silver",
+        "\"Beekeeper Suit\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Saddle Up",
+        "Tame a  horse .",
+        "\u2014",
+        "20",
+        "Bronze",
+        "\"Cowpoke Chaps\" bottom"
+      ],
+      [
+        "",
+        "",
+        "Whatever Floats Your Goat",
+        "Get in a boat and float with a  goat",
+        "Use a boat and put a goat inside that boat, then ride it.",
+        "20",
+        "Bronze",
+        "\"Goat Floaties\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Bake Bread",
+        "Turn wheat into bread.",
+        "Pick up  bread  from a  crafting table  output.",
+        "15",
+        "Bronze",
+        "\"Chefs Hat\" headwear"
+      ],
+      [
+        "",
+        "",
+        "The Lie",
+        "Bake a cake using: wheat, sugar, milk, and eggs.",
+        "Pick up a  cake  from a  crafting table  output.",
+        "30",
+        "Bronze",
+        "\"Cake Apron\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Delicious Fish",
+        "Catch and cook a fish!",
+        "Pick up a  cooked cod  after cooking it in a  furnace ,  smoker ,  campfire , or  soul campfire . Note: This does not work if the block used is connected to a hopper underneath, as the player is not getting the item directly from the output.",
+        "15",
+        "Silver",
+        "\"Fisherman Hat\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Local Brewery",
+        "Brew a potion.",
+        "Pick up a  potion  from a  brewing stand  potion slot. An already-created potion placed and removed qualifies.",
+        "15",
+        "Bronze",
+        "\"Witch Hat\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Iron Belly",
+        "Stop starvation using Rotten Flesh.",
+        "Eat a piece of  rotten flesh  while starving (zero  hunger  points).",
+        "20",
+        "Bronze",
+        "\"A Hunger?\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Rabbit Season",
+        "Cook and Eat  Rabbit Meat",
+        "\u2014",
+        "15",
+        "Bronze",
+        "\"Hunter's Hat\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Time for Stew",
+        "Give someone a  suspicious stew .",
+        "Drop  a suspicious stew. Another player must then pick up this suspicious stew.",
+        "20",
+        "Bronze",
+        "\"Witch's Robe\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Top of the World",
+        "Place  scaffolding  to the world limit.",
+        "Place a scaffolding at the world height limit.",
+        "20",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Pot Planter",
+        "Craft and place a  Flower Pot .",
+        "\u2014",
+        "15",
+        "Bronze",
+        "\"Flower Pot Shoes\" footwear"
+      ],
+      [
+        "",
+        "",
+        "It's a Sign!",
+        "Craft and place an  Oak Sign .",
+        "\u2014",
+        "15",
+        "Bronze",
+        "\"Divination Cape\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Wax on, Wax off",
+        "Apply and remove  Wax  from all the Copper blocks!!!",
+        "Wax and de-wax each  oxidation  stage of the 4 original copper blocks in the game:  blocks of copper ,  cut copper blocks ,  cut copper stairs , and  cut copper slabs .",
+        "30",
+        "Silver",
+        "\"Copper Headband\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Careful restoration",
+        "Make a  Decorated Pot  out of 4  Pottery Sherds",
+        "\u2014",
+        "10",
+        "Bronze",
+        "\"Pottery Disguise\" headwear"
+      ],
+      [
+        "",
+        "",
+        "The Haggler",
+        "Acquire or spend 30 Emeralds by trading with  villagers  or with  wandering trader . [   sic   ]",
+        "\u2014",
+        "30",
+        "Silver",
+        "\"Emerald Suit Coat\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Body Guard",
+        "Create an  Iron Golem",
+        "\u2014",
+        "20",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Tie Dye Outfit",
+        "Use a  cauldron  to dye all 4 unique pieces of leather armor.",
+        "\u2014",
+        "15",
+        "Bronze",
+        "\"Tie Dye Tank\" top"
+      ],
+      [
+        "",
+        "",
+        "Zombie Doctor",
+        "Cure a  zombie villager .",
+        "Throw a  splash potion  of  weakness  at a zombie villager and give it a  golden apple  (by facing the zombie and pressing the  use  key with a golden apple in your hand).",
+        "40",
+        "Gold",
+        "\"Plague Doctor Mask\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Where have you been?",
+        "Receive a gift from a tamed cat in the morning.",
+        "The gift must be picked up from the ground.",
+        "20",
+        "Bronze",
+        "\"Kitty Face :3\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Plethora of Cats",
+        "Befriend twenty stray  cats .",
+        "Befriend and tame twenty stray cats found in  villages . They do not all need to be tamed in a single world.",
+        "20",
+        "Silver",
+        "\"Calico Headset\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Fruit on the Loom",
+        "Make a banner using an Enchanted Apple Stencil",
+        "Make a banner using an  enchanted golden apple .",
+        "20",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Kill the Beast!",
+        "Defeat a  Ravager .",
+        "\u2014",
+        "30",
+        "Silver",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Buy Low, Sell High",
+        "Trade for the best possible price.",
+        "Buy something for 1 emerald, or when the  Hero of the Village  effect is applied.",
+        "50",
+        "Gold",
+        "\"Gold Club Jacket\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Disenchanted",
+        "Use a  Grindstone  to get experience from an enchanted item.",
+        "\u2014",
+        "20",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "We're being attacked!",
+        "Trigger a Pillager  Raid .",
+        "Walk in a  village  with the  Raid Omen  effect applied in 30 seconds.",
+        "20",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Sound the Alarm!",
+        "Ring the  bell  in a  village  after a  villager  has been hurt.",
+        "\u2014",
+        "20",
+        "Bronze",
+        "\"Fake Villager nose\" face item"
+      ],
+      [
+        "",
+        "",
+        "I've got a bad feeling about this",
+        "Kill a  Pillager Captain .",
+        "Drink an  Ominous Bottle .",
+        "20",
+        "Bronze",
+        "\"Victor's Trousers\" bottom"
+      ],
+      [
+        "",
+        "",
+        "Master Trader",
+        "Trade for 1,000  emeralds .",
+        "Obtain 1,000 emeralds from trading with villagers.",
+        "30",
+        "Silver",
+        "\"Emerald Headwrap\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Star trader",
+        "Trade with a  villager  at the build height limit.",
+        "\u2014",
+        "20",
+        "Silver",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Treasure Hunter",
+        "Acquire a map from a cartographer  villager , then enter the revealed structure",
+        "Visit the structure indicated while the purchased map is in your main hand (hotbar).",
+        "40",
+        "Silver",
+        "\"Archaeologist's Hat\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Enchanter",
+        "Construct an Enchantment Table.",
+        "Pick up an  enchantment table  from a  crafting table  output.",
+        "20",
+        "Bronze",
+        "\"Enchanters Hat\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Librarian",
+        "Build some  bookshelves  to improve your  enchantment table .",
+        "Pick up a bookshelf from a  crafting table  output.",
+        "20",
+        "Bronze",
+        "\"Stack of Books\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Overpowered",
+        "Eat an  Enchanted Golden Apple",
+        "\u2014",
+        "30",
+        "Silver",
+        "\"Diamond Bod\" base"
+      ],
+      [
+        "",
+        "",
+        "Stayin' Frosty",
+        "Swim in lava while having the  Fire Resistance  effect.",
+        "\u2014",
+        "20",
+        "Bronze",
+        "\"Lil' Chilly\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Map Room",
+        "Place 9 fully explored, adjacent  map  items into 9  item frames  in a 3 by 3 square.",
+        "The frames have to be on a wall, not the floor.",
+        "40",
+        "Silver",
+        "\"Compass Coat\" top"
+      ],
+      [
+        "",
+        "",
+        "Taste of Your Own Medicine",
+        "Poison a  witch  with a  splash potion .",
+        "Throw a splash potion of  poison  at a witch (by facing the witch and pressing the  use  key).",
+        "20",
+        "Silver",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Beam Me Up",
+        "Teleport over 100 meters from a single throw of an  Ender Pearl .",
+        "Throw an ender pearl 100 blocks in any direction",
+        "20",
+        "Silver",
+        "\"Abducted?\" emote"
+      ],
+      [
+        "",
+        "",
+        "Cheating Death",
+        "Use the  Totem of Undying  to cheat death",
+        "Have the totem of undying in your hand when you die.",
+        "30",
+        "Silver",
+        "\"Fake Death\" emote"
+      ],
+      [
+        "",
+        "",
+        "Let It Go!",
+        "Using the  Frost Walker  boots, walk on at least 1 block on frozen water on a deep ocean",
+        "\u2014",
+        "20",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Dispense With This",
+        "Construct a  Dispenser .",
+        "\u2014",
+        "20",
+        "Bronze",
+        "\"Dispenser Shirt\" top"
+      ],
+      [
+        "",
+        "",
+        "Freight Station",
+        "Use a  Hopper  to move an item from a  Chest Minecart  to a  Chest .",
+        "Use a Hopper to move an item from a Minecart with Chest or a  Boat with Chest  to a Chest.",
+        "15",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Smelt Everything!",
+        "Connect 3 Chests to a single  Furnace  using 3  Hoppers .",
+        "Be within the range of three chests connected to a Furnace with 3 Hoppers. Note: The demonstration shown in the image would not give the achievement.",
+        "15",
+        "Bronze",
+        "\"Blacksmith Apron\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Inception",
+        "Push a  piston  with a piston, then pull the original piston with that piston.",
+        "\u2014",
+        "20",
+        "Silver",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Crafters Crafting Crafters",
+        "Be near a  Crafter  when it crafts a Crafter",
+        "\u2014",
+        "10",
+        "Bronze",
+        "\"Burping Buddies\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Dry Spell",
+        "Dry a  sponge  in a furnace",
+        "\u2014",
+        "15",
+        "Bronze",
+        "\"Spongey\" base"
+      ],
+      [
+        "",
+        "",
+        "Free Diver",
+        "Stay underwater for 2 minutes",
+        "Drink a  potion  of  water breathing  that can last for 2 minutes or more, then jump into water; or activate a  conduit ; or  sneak  on a  magma block  underwater for 2 minutes.",
+        "20",
+        "Silver",
+        "\"Underwater Dancing\" emote"
+      ],
+      [
+        "",
+        "",
+        "Atlantis?",
+        "Find an  underwater ruin",
+        "\u2014",
+        "20",
+        "Silver",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Sail the 7 Seas",
+        "Visit all  ocean  biomes",
+        "Visit all ocean biomes except the deep warm ocean/legacy frozen ocean (as they are unused).",
+        "40",
+        "Gold",
+        "\"Nautical Tricorn\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Castaway",
+        "Eat nothing but  dried kelp  for three in-game days",
+        "Eat dried kelp once; in the following three in-game days, eat nothing but dried kelp.",
+        "20",
+        "Bronze",
+        "\"Shredded Shirt\" top"
+      ],
+      [
+        "",
+        "",
+        "Ahoy!",
+        "Find a  shipwreck",
+        "\u2014",
+        "20",
+        "Silver",
+        "\"Spyglass\" face item"
+      ],
+      [
+        "",
+        "",
+        "I am a Marine Biologist",
+        "Collect a  fish  in a bucket",
+        "Use a  water bucket  on any  fish  mob.",
+        "20",
+        "Bronze",
+        "\"Sailor's Hat\" headwear"
+      ],
+      [
+        "",
+        "",
+        "One Pickle, Two Pickle, Sea Pickle, Four",
+        "Place four  Sea Pickles  in a group",
+        "\u2014",
+        "20",
+        "Bronze",
+        "\"Pickled Feet\" footwear"
+      ],
+      [
+        "",
+        "",
+        "Echolocation",
+        "Feed a  dolphin   fish  to have it lead you to treasure",
+        "Feed a dolphin cod or salmon and have it lure you to treasure.",
+        "20",
+        "Silver",
+        "\"Sine Wave Tee\" top"
+      ],
+      [
+        "",
+        "",
+        "Me Gold!",
+        "Dig up a  buried treasure",
+        "Open a buried treasure  chest .",
+        "30",
+        "Silver",
+        "\"Treasure Map Shirt\" top"
+      ],
+      [
+        "",
+        "",
+        "Sleep with the Fishes",
+        "Spend a day underwater.",
+        "Spend 20 minutes underwater without any air. Can be done with a  conduit ,  water breathing  potions, or  bubble columns .",
+        "30",
+        "Silver",
+        "\"Octo Beard\" facial hair"
+      ],
+      [
+        "",
+        "",
+        "Alternative Fuel",
+        "Power a furnace with a  kelp block",
+        "This achievement is awarded only if the dried kelp block is put into the furnace's fuel slot manually, not via redstone components such as  hoppers .",
+        "20",
+        "Bronze",
+        "\"Power Core\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Do a Barrel Roll!",
+        "Use  Riptide  to give yourself a boost",
+        "Obtain a  trident  enchanted with Riptide and launch yourself any distance with it.",
+        "30",
+        "Silver",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "The Deep End",
+        "Defeat an  Elder Guardian",
+        "\u2014",
+        "30",
+        "Silver",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Moskstraumen",
+        "Activate a  Conduit",
+        "Place a conduit in a valid prismarine/sea lantern structure to activate it.",
+        "50",
+        "Gold",
+        "\"Glub Glub\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Lion Hunter",
+        "Gain the trust of an  Ocelot .",
+        "\u2014",
+        "15",
+        "Bronze",
+        "\"Ocelot Print Pants\" bottom"
+      ],
+      [
+        "",
+        "",
+        "So I Got That Going for Me",
+        "Lead a Caravan containing at least 5  Llamas",
+        "\u2014",
+        "20",
+        "Bronze",
+        "\"Llama Poncho\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Zoologist",
+        "Breed two pandas with bamboo.",
+        "\u2014",
+        "40",
+        "Gold",
+        "\"Panda Sweater\" top"
+      ],
+      [
+        "",
+        "",
+        "Birthday Song",
+        "Have an Allay drop a cake at a noteblock",
+        "Tame an  allay  by giving it a cake while having dropped cake items and play a  note block  nearby.",
+        "10",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "With Our Powers Combined!",
+        "Have all 3 froglights in your inventory",
+        "Acquire at least one of each pearlescent, verdant, and ochre  froglights  in your inventory at the same time.",
+        "30",
+        "Gold",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Planting the past",
+        "Plant any Sniffer seed",
+        "\u2014",
+        "10",
+        "Bronze",
+        "\"Sniffer Sniffin'\" emote"
+      ],
+      [
+        "",
+        "",
+        "Iron Man",
+        "Wear a full suit of Iron Armor.",
+        "\u2014",
+        "15",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Smithing with style",
+        "Apply these  smithing templates  at least once:  Spire ,  Snout ,  Rib ,  Ward ,  Silence ,  Vex ,  Tide ,  Wayfinder",
+        "Each of these smithing templates must be used.",
+        "30",
+        "Gold",
+        "\"Blacksmith Gauntlets\" gloves"
+      ],
+      [
+        "",
+        "",
+        "Camouflage",
+        "Kill a mob while wearing the same type of mob  head .",
+        "\u2014",
+        "30",
+        "Bronze",
+        "\"Creeper Costume\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Cover me in debris",
+        "Wear a full set of  Netherite  armor",
+        "Have a full set of Netherite armor in your inventory.",
+        "50",
+        "Gold",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Archer",
+        "Kill a  creeper  with arrows.",
+        "\u2014",
+        "10",
+        "Bronze",
+        "\"Archers Quiver\" back item"
+      ],
+      [
+        "",
+        "",
+        "Bullseye",
+        "Hit the bullseye of a  Target  block",
+        "\u2014",
+        "15",
+        "Bronze",
+        "\"Bullseye Top\" top"
+      ],
+      [
+        "",
+        "",
+        "Sniper Duel",
+        "Kill a Skeleton with an arrow from more than 50 meters.",
+        "Use a launched  arrow  to kill a  skeleton ,  wither skeleton ,  stray , or  bogged  from 50 or more blocks away, horizontally.",
+        "30",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Overkill",
+        "Deal nine hearts of damage in a single hit.",
+        "Damage can be dealt to any mob, even those that do not have nine hearts of health overall.",
+        "30",
+        "Bronze",
+        "\"Victor's Wide Hat\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Feeling Ill",
+        "Defeat an  Evoker",
+        "\u2014",
+        "30",
+        "Silver",
+        "\"Vex Wings\" back item"
+      ],
+      [
+        "",
+        "",
+        "The Healing Power of Friendship!",
+        "Team up with an  axolotl  and win a fight",
+        "Be near\u200b [  more information needed  ] \nan axolotl when killing a hostile aquatic mob   [ note 2 ]    while the axolotl is fighting it (not playing dead).",
+        "30",
+        "Silver",
+        "\"Friendship Bracelet\" glove"
+      ],
+      [
+        "",
+        "",
+        "It Spreads",
+        "Kill a mob next to a  catalyst",
+        "\u2014",
+        "10",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Sneak 100",
+        "Sneak next to a  Sculk Sensor  without triggering it",
+        "Sneak  next to a Sculk Sensor or Warden without triggering or aggravating it.",
+        "10",
+        "Bronze",
+        "\"Sneaking\" emote"
+      ],
+      [
+        "",
+        "",
+        "Revaulting",
+        "Unlock a  Ominous Vault  with an  Ominous Trial Key",
+        "\u2014",
+        "20",
+        "Silver",
+        "\"Vaulted Tee\" top"
+      ],
+      [
+        "",
+        "",
+        "Who Needs Rockets?",
+        "Use a  Wind Charge  to launch yourself upward 8 blocks",
+        "\u2014",
+        "10",
+        "Bronze",
+        "\"Wind Wisps\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "Over-Overkill",
+        "Deal 50 hearts of damage in a single hit using the  Mace",
+        "Damage can be dealt to any mob, even those that do not have 50 hearts of health overall.",
+        "20",
+        "Silver",
+        "\"Charged Gauntlet\" gloves"
+      ],
+      [
+        "",
+        "",
+        "Heart Transplanter",
+        "Place a Creaking Heart with the correct alignment between two Pale Oak Log blocks",
+        "\u2014",
+        "20",
+        "Silver",
+        "\"Creaking Heart Shirt\" top"
+      ],
+      [
+        "",
+        "",
+        "Into The Nether",
+        "Construct a Nether Portal.",
+        "Light a nether portal.",
+        "30",
+        "Bronze",
+        "\"Feel the Nether\" base"
+      ],
+      [
+        "",
+        "",
+        "Return to Sender",
+        "Destroy a  Ghast  with a fireball.",
+        "Kill a ghast using a  ghast fireball .",
+        "30",
+        "Silver",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Feels Like Home",
+        "Take a Strider for a loooong [   sic   ] ride on a lava lake in the  Overworld .",
+        "In the Overworld, use a  strider  to ride on a lava lake for a distance of 50 blocks from the point where the ride starts.",
+        "20",
+        "Silver",
+        "\"Strider Buddies\" headwear"
+      ],
+      [
+        "",
+        "",
+        "Into Fire",
+        "Relieve a  Blaze  of  its rod .",
+        "Pick up a blaze rod from the ground.",
+        "20",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Oooh, shiny!",
+        "Distract a  Piglin  using  gold",
+        "Give a piglin a gold item\u200b [  more information needed  ]  while it is aggressive toward the player.",
+        "30",
+        "Silver",
+        "\"Golden Watch\" glove"
+      ],
+      [
+        "",
+        "",
+        "Hot tourist destination",
+        "Visit all  Nether  biomes",
+        "Note: Can be completed if the player visits the biomes in different worlds.",
+        "30",
+        "Silver",
+        "\"I'm on FIRE!?\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "The Beaconator",
+        "Create and fully power a  Beacon",
+        "Be within a 20\u00d720\u00d714 cuboid centered on the pyramid when the beacon block realizes it is fully powered.",
+        "60",
+        "Gold",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Stay Hydrated!",
+        "Place a Dried Ghast block into water",
+        "\u2014",
+        "10",
+        "Silver",
+        "\"Ghast Arm Floaties\" gloves"
+      ],
+      [
+        "",
+        "",
+        "The Beginning?",
+        "Spawn the  Wither",
+        "Be within a 100.9\u00d7100.9\u00d7103.5 cuboid centered on the Wither when it is spawned.",
+        "20",
+        "Bronze",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "The Beginning.",
+        "Kill the Wither",
+        "Be within a 100.9\u00d7100.9\u00d7203.5 cuboid centered on the Wither when it drops the nether star.",
+        "40",
+        "Silver",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "The End?",
+        "Enter an End Portal",
+        "Enter a stronghold End Portal activated with all twelve eyes of ender.",
+        "20",
+        "Gold",
+        "\"Victor's Boots\" footwear"
+      ],
+      [
+        "",
+        "",
+        "The End",
+        "Kill the  Enderdragon  [   sic   ]",
+        "Enter the end  exit portal .",
+        "40",
+        "Bronze",
+        "\"Victor's Overcoat\" outerwear"
+      ],
+      [
+        "",
+        "",
+        "You Need a Mint",
+        "Collect dragons [   sic   ] breath in a glass bottle",
+        "Have a  dragon's breath  bottle in your inventory.",
+        "30",
+        "Silver",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "The End... Again...",
+        "Respawn the  Enderdragon  [   sic   ]",
+        "\u2014",
+        "30",
+        "Silver",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Great View From Up Here",
+        "Levitate up 50 blocks from the attacks of a  Shulker",
+        "Ascend at least 50 blocks while under the levitation effect from a shulker.",
+        "20",
+        "Bronze",
+        "\"Elder Dragon Wings\" back item"
+      ],
+      [
+        "",
+        "",
+        "Super Sonic",
+        "Use  Elytra  to fly through a 1 by 1 gap while moving faster than 40 m/s",
+        "\u2014",
+        "30",
+        "Gold",
+        "\u2014"
+      ],
+      [
+        "",
+        "",
+        "Organizational Wizard",
+        "Name a  Shulker Box  with an  Anvil",
+        "\u2014",
+        "30",
+        "Bronze",
+        "\u2014"
+      ]
+    ]
+  },
+  "Gran Turismo 7": {
+    "source": "https://www.gtplanet.net/gran-turismo-7-trophy-list-leaks-20220226/",
+    "rows": [
+      [
+        "Gran Turismo Platinum Trophy",
+        "Acquired all Gran Turismo 7 trophies!"
+      ],
+      [
+        "Finale",
+        "Fulfilled requirements for ending"
+      ],
+      [
+        "Hard Work Pays Off",
+        "Earned Gold in all licenses"
+      ],
+      [
+        "Circuit Master",
+        "Completed 15 tracks (all sectors) in Circuit Experience"
+      ],
+      [
+        "Driving the Autobahn Together",
+        "Driving with other players online, you matched the distance covered by the entire German Autobahn network: 13,191km (8,197 miles)"
+      ],
+      [
+        "Speed Archdemon",
+        "Reached a speed of 600km/h (373mph)"
+      ],
+      [
+        "Three Legendary Cars",
+        "Acquired three legendary race cars that were once destined to win 24 hour races"
+      ],
+      [
+        "A Bit of a Boost",
+        "Purchased a turbo or supercharger 10 times"
+      ],
+      [
+        "A Taste of Tuning",
+        "Bought and equipped tuning parts"
+      ],
+      [
+        "All-Rounder",
+        "Won races on 10 different tracks"
+      ],
+      [
+        "By a Country Mile",
+        "Won with a lead of 10 seconds or more, in a race of at least two laps"
+      ],
+      [
+        "By a Whisker",
+        "Won a race with a lead of 0.5 seconds or less"
+      ],
+      [
+        "Circuit Apprentice",
+        "Completed five tracks (all sectors) in Circuit Experience"
+      ],
+      [
+        "Clean Racer",
+        "Completed a race without leaving the track or any collisions"
+      ],
+      [
+        "Crossing the Atlantic Together",
+        "Driving with other players online, you matched the distance covered by the first ever non-stop Transatlantic flight: 5,810km (3,610 miles)"
+      ],
+      [
+        "Digging the Dirt",
+        "Won 10 races on dirt tracks"
+      ],
+      [
+        "Done in 60 Seconds",
+        "Drove a lap of the Tsukuba Circuit in under one minute"
+      ],
+      [
+        "Driving for 24 Hours",
+        "Drove the length of one complete 24 Hours of Le Mans race: 2,209.538km (1,372.942 miles)"
+      ],
+      [
+        "Driving the Angeles Crest Highway",
+        "Drove the length of the Angeles Crest Highway (US) \u2013 66 miles (106km)"
+      ],
+      [
+        "Driving Route 66",
+        "Drove the length of Route 66 (US): 2,451 miles (3,945km)"
+      ],
+      [
+        "Fill Her Up",
+        "Took a pitstop during a race which featured fuel consumption, and filled your tank"
+      ],
+      [
+        "Firm Favorite",
+        "Bought the same car 10 times"
+      ],
+      [
+        "Formula First Timer",
+        "Drove a Formula car"
+      ],
+      [
+        "Fully Licensed",
+        "Earned all licenses"
+      ],
+      [
+        "Heavy Haulage",
+        "Bought a pickup truck"
+      ],
+      [
+        "In-Depth Mastery",
+        "Finished 50 races in Sport Mode"
+      ],
+      [
+        "Join the 200-mph Club",
+        "Reached a speed of 200mph (322km/h)"
+      ],
+      [
+        "Let\u2019s Go Carbon Neutral!",
+        "Bought an electric car"
+      ],
+      [
+        "Living with a Legend",
+        "Bought a car at the Legend Cars dealership"
+      ],
+      [
+        "Living Your Car Life",
+        "Started the first menu"
+      ],
+      [
+        "Looking Good!",
+        "Bought and equipped aerodynamic parts"
+      ],
+      [
+        "Memento from Le Mans",
+        "Took a Scapes photo of an Audi R18 TDI (Audi Sport Team Joest) on the Circuit de la Sarthe"
+      ],
+      [
+        "Memento from the Nurburgring",
+        "Took a Scapes photo of a BMW Gr.3 car on the Nurburgring"
+      ],
+      [
+        "Motor Mania",
+        "Stored 50 cars in your Garage"
+      ],
+      [
+        "Moving on Up",
+        "Moved up five or more positions in a single lap"
+      ],
+      [
+        "New Treads",
+        "Took a pitstop during a race and changed your tires"
+      ],
+      [
+        "No Assistance Required!",
+        "Completed a race without any assist settings"
+      ],
+      [
+        "No Car, No Life",
+        "Stored 100 cars in your Garage"
+      ],
+      [
+        "Podium Fixture",
+        "Finished on the podium ten times"
+      ],
+      [
+        "Rain Royalty",
+        "Acquired your rain license"
+      ],
+      [
+        "Round and Round",
+        "Drove 500 miles (804.672km) on oval tracks"
+      ],
+      [
+        "Running on Empty",
+        "Ran out of fuel in a race which featured fuel consumption"
+      ],
+      [
+        "Safety First",
+        "Bought a safety car"
+      ],
+      [
+        "Smoking Hot",
+        "Earned 10,000pts in Drift Trials"
+      ],
+      [
+        "Snap-Happy",
+        "Took 100 photos in Scapes or Race Photos"
+      ],
+      [
+        "Speed Demon",
+        "Reached a speed of 500km/h (311mph)"
+      ],
+      [
+        "Sport Mode Debut",
+        "Finished a race in Sport Mode"
+      ],
+      [
+        "Squeaky Clean",
+        "Washed a car 10 times"
+      ],
+      [
+        "Student of Motoring History",
+        "Completed the first car collecting menu"
+      ],
+      [
+        "The First Step to Mastery",
+        "Completed a track (all sectors) in Circuit Experience"
+      ],
+      [
+        "Time Attacker",
+        "Took part in 100 time trials"
+      ],
+      [
+        "Toughening Up",
+        "Increased a car\u2019s body rigidity 10 times"
+      ],
+      [
+        "Warning: Wide Load!",
+        "Fit a wide body"
+      ],
+      [
+        "Wheely Good Fun",
+        "Bought 10 sets of wheels"
+      ]
+    ]
+  }
+}

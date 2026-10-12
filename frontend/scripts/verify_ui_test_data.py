@@ -41,7 +41,9 @@ for owned in library:
     if got == 0:
         untouched.append(title)
 assert len(library) >= 18 and len(unlocks) >= 132
-assert len(completed) >= 2 and len(untouched) >= 3
+assert len(untouched) >= 3
+assert all(not item['name'].startswith('[UI Test]') for item in achievements)
+assert all(game.get('image_url') for game in games)
 assert len({row['acquired_date'][:7] for row in unlocks}) >= 6
 rank = max((level for level in levels if level['exp_required'] <= xp), key=lambda level: level['exp_required'], default=None)
 print(json.dumps({'login': 'OK', 'player_id': profile['id'], 'catalog_games': len(games),

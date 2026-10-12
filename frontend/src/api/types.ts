@@ -9,6 +9,7 @@ export interface Game {
   title: string
   publisher: string
   genre: string
+  image_url?: string
 }
 export interface Achievement {
   id: number

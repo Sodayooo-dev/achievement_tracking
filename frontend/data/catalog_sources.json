@@ -1,0 +1,186 @@
+[
+  {
+    "title": "Terraria",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=105600&l=english",
+      "achievements": "https://steamcommunity.com/stats/105600/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/105600/header.jpg?t=1769844435"
+  },
+  {
+    "title": "Valheim",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=892970&l=english",
+      "achievements": "https://steamcommunity.com/stats/892970/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/892970/1888731b59362fca6c026cdbafa3dfffd45c3146/header_alt_assets_6.jpg?t=1791544831"
+  },
+  {
+    "title": "The Elder Scrolls V: Skyrim Special Edition",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=489830&l=english",
+      "achievements": "https://steamcommunity.com/stats/489830/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/489830/header.jpg?t=1786648247"
+  },
+  {
+    "title": "ELDEN RING",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=1245620&l=english",
+      "achievements": "https://steamcommunity.com/stats/1245620/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg?t=1790290043"
+  },
+  {
+    "title": "Baldur's Gate 3",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=1086940&l=english",
+      "achievements": "https://steamcommunity.com/stats/1086940/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1086940/48a2fcbda8565bb45025e98fd8ebde8a7203f6a0/header.jpg?t=1777363040"
+  },
+  {
+    "title": "Celeste",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=504230&l=english",
+      "achievements": "https://steamcommunity.com/stats/504230/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/504230/header.jpg?t=1714089525"
+  },
+  {
+    "title": "Hollow Knight",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=367520&l=english",
+      "achievements": "https://steamcommunity.com/stats/367520/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/3c3489495136b26b34f8a9543c7f5645b99d388c/header.jpg?t=1776125684"
+  },
+  {
+    "title": "Ori and the Will of the Wisps",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=1057090&l=english",
+      "achievements": "https://steamcommunity.com/stats/1057090/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1057090/header.jpg?t=1759530749"
+  },
+  {
+    "title": "DOOM Eternal",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=782330&l=english",
+      "achievements": "https://steamcommunity.com/stats/782330/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/782330/feaf8293bcd2d078422faa547bc0d707c08f606e/header.jpg?t=1783432602"
+  },
+  {
+    "title": "Titanfall 2",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=1237970&l=english",
+      "achievements": "https://steamcommunity.com/stats/1237970/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1237970/header.jpg?t=1779987598"
+  },
+  {
+    "title": "Deep Rock Galactic",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=548430&l=english",
+      "achievements": "https://steamcommunity.com/stats/548430/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/548430/37b58a6c4816ee60b0ca97cb6724d6e904c58c41/header.jpg?t=1791554128"
+  },
+  {
+    "title": "Street Fighter 6",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=1364780&l=english",
+      "achievements": "https://steamcommunity.com/stats/1364780/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1364780/header.jpg?t=1789611360"
+  },
+  {
+    "title": "TEKKEN 8",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=1778820&l=english",
+      "achievements": "https://steamcommunity.com/stats/1778820/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1778820/c7b0b80639fc8c7d386922f414f293ca849e8e81/header.jpg?t=1787180720"
+  },
+  {
+    "title": "GUILTY GEAR -STRIVE-",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=1384160&l=english",
+      "achievements": "https://steamcommunity.com/stats/1384160/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1384160/23a7b8f8c96b47ab7ef5f22f33b572a63aaf9fab/header.jpg?t=1788400087"
+  },
+  {
+    "title": "Forza Horizon 5",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=1551360&l=english",
+      "achievements": "https://steamcommunity.com/stats/1551360/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg?t=1788546569"
+  },
+  {
+    "title": "Rocket League",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=252950&l=english",
+      "achievements": "https://steamcommunity.com/stats/252950/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/252950/3abd9ab079c8896a4762dbe34a853d89b7f704df/header_alt_assets_17.jpg?t=1791210513"
+  },
+  {
+    "title": "Stardew Valley",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=413150&l=english",
+      "achievements": "https://steamcommunity.com/stats/413150/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg?t=1786554168"
+  },
+  {
+    "title": "Portal 2",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=620&l=english",
+      "achievements": "https://steamcommunity.com/stats/620/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/620/faffc0f560786e2f05104a8d2fac837c6969bf13/header.jpg?t=1790187113"
+  },
+  {
+    "title": "Hades",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=1145360&l=english",
+      "achievements": "https://steamcommunity.com/stats/1145360/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1145360/header.jpg?t=1758127023"
+  },
+  {
+    "title": "Assetto Corsa",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=244210&l=english",
+      "achievements": "https://steamcommunity.com/stats/244210/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/244210/header.jpg?t=1782208838"
+  },
+  {
+    "title": "No Man's Sky",
+    "sources": {
+      "metadata": "https://store.steampowered.com/api/appdetails?appids=275850&l=english",
+      "achievements": "https://steamcommunity.com/stats/275850/achievements/?l=english"
+    },
+    "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/275850/2c6e38b43a5309dfcd3cc0f0134e222b0fa2d1b1/header_alt_assets_25.jpg?t=1789479023"
+  },
+  {
+    "title": "Minecraft",
+    "sources": {
+      "metadata": "https://displaycatalog.mp.microsoft.com/v7.0/products?bigIds=9NBLGGH2JHXJ&market=US&languages=en-us",
+      "achievements": "https://wiki.ronlab.site/content/minecraftwiki_en_all_maxi_2025-11/Achievement"
+    },
+    "image_url": "https://store-images.s-microsoft.com/image/apps.42664.13510798885735219.3576178f-5830-46af-9837-7194db7781e8.b3e584ef-cdd4-4e1c-ad75-beebd48b7018"
+  },
+  {
+    "title": "Gran Turismo 7",
+    "sources": {
+      "metadata": "https://www.playstation.com/en-us/games/gran-turismo-7/",
+      "achievements": "https://www.gtplanet.net/gran-turismo-7-trophy-list-leaks-20220226/"
+    },
+    "image_url": "https://image.api.playstation.com/vulcan/ap/rnd/202511/0707/303f5701426596a09891f9f33fa93e49ae522d5295b26dce.png"
+  }
+]

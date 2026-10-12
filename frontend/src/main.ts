@@ -9,6 +9,7 @@ import '@fontsource/atkinson-hyperlegible/latin-700.css'
 import './assets/main.css'
 import './assets/immersion.css'
 import './assets/frontloader.css'
+import './assets/artwork.css'
 
 const app = createApp(App)
 

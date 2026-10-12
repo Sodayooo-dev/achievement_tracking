@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Game } from '@/api/types'
 import { genreToTheme } from '@/lib/genre'
-import PixelIcon from '@/components/ui/PixelIcon.vue'
+import GameArtwork from '@/components/ui/GameArtwork.vue'
 defineProps<{
   game: Game
   completion: { got: number; total: number; pct: number }
@@ -25,7 +25,7 @@ defineProps<{
         <span>{{ game.genre }}</span
         ><span>{{ completion.pct === 100 ? '★ PERFECT' : 'PLAY' }}</span>
       </div>
-      <PixelIcon :name="game.title" />
+      <GameArtwork :title="game.title" :url="game.image_url" />
       <h3>{{ game.title }}</h3>
       <p>{{ game.publisher }}</p>
       <div class="label-bottom"><span>CARTRIDGE HUB</span><span>®</span></div>

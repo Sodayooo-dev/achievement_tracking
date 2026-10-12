@@ -10,6 +10,7 @@ import { ApiError } from '@/api/client'
 import type { PlayerAchievement, PlayerGame, Profile } from '@/api/types'
 import Modal from '@/components/ui/Modal.vue'
 import LoadState from '@/components/ui/LoadState.vue'
+import GameArtwork from '@/components/ui/GameArtwork.vue'
 type Row = Record<string, unknown> & { id: number }
 type Field = {
   key: string
@@ -25,6 +26,7 @@ const editors: Record<string, { title: string; resource: string; fields: Field[]
       { key: 'title', label: 'Title' },
       { key: 'publisher', label: 'Publisher' },
       { key: 'genre', label: 'Genre' },
+      { key: 'image_url', label: 'Official game image URL (optional)', type: 'url' },
     ],
   },
   achievements: {
@@ -360,7 +362,7 @@ const rowName = (row: Row) =>
                 :step="field.type === 'number' ? 1 : undefined"
                 :list="field.key === 'player_id' ? 'player-ids' : undefined"
                 :required="
-                  !['first_name', 'last_name', 'email'].includes(field.key) &&
+                  !['first_name', 'last_name', 'email', 'image_url'].includes(field.key) &&
                   !(key === 'players' && field.key === 'password')
                 "
                 :autocomplete="field.type === 'password' ? 'new-password' : 'off'"
@@ -368,7 +370,18 @@ const rowName = (row: Row) =>
               /><small v-if="fieldErrors[field.key]" class="field-error">{{
                 (fieldErrors[field.key] as string[]).join(' ')
               }}</small></label
-            ><datalist id="player-ids">
+            >
+            <div v-if="key === 'games' && form.image_url" class="game-image-preview">
+              <GameArtwork
+                :title="String(form.title || 'Game image preview')"
+                :url="String(form.image_url)"
+              />
+              <p>
+                Preview · Paste an official icon or box-art image URL. Leave blank to use a pixel
+                icon.
+              </p>
+            </div>
+            <datalist id="player-ids">
               <option v-for="id in suggestions" :key="id" :value="id" /></datalist
             ><button
               class="primary"

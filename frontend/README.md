@@ -1,6 +1,6 @@
 # Cartridge Hub
 
-A Vue 3 + TypeScript achievement tracker built on the existing Django API. Frontend implementation lives in `frontend/`. The only backend edit was the user-approved local database password update in `config/settings.py`.
+A Vue 3 + TypeScript achievement tracker built on the existing Django API. Frontend implementation lives in `frontend/`. Approved backend changes are the local database password update and the optional Games `image_url` field with its migration. API routes remain unchanged.
 
 ## Run locally
 
@@ -68,9 +68,9 @@ Type checking, production build and all 14 automated tests passed. A read-only d
 
 ## Seeded UI test account
 
-The local database now has a normal user named `cartridge_tester` (player ID 7). It owns 18 games and has 133 unlocked achievements worth 13,485 XP (Pro). The catalog contains 22 games and 298 achievements. Minecraft and Baldur's Gate 3 are complete, three owned games are untouched, and the rest show partial progress. Save history spans April–October 2026. All seven genre layouts have populated fixtures, including unowned catalog entries.
+The local database has a normal user named `cartridge_tester` (player ID 7). It owns 18 games and has 133 unlocked achievements worth 13,485 XP (Pro). The real catalog contains 24 games and 2,117 achievement definitions, with official artwork on all games. Three owned games are untouched; existing unlocks remain on the converted real definitions. Completion percentages now reflect the larger real achievement lists. Save history spans April–October 2026.
 
-Fixture achievements are prefixed `[UI Test]`; they are test objectives rather than official game achievements. Existing records are preserved. The additive seed script lives at `scripts/seed_ui_test_data.py` and can be rerun through Django shell without duplicating fixtures or resetting the test password. Credentials were supplied in the chat and are not stored in frontend source.
+The original 297 `[UI Test]` definitions were replaced in place with real achievements, retaining their IDs, XP and player unlock references. The old synthetic seeder is disabled while the real catalog is active. Credentials were supplied in the chat and are not stored in frontend source. Test-account unlocks remain simulated test progress rather than a connection to the player's Steam/console account.
 
 `scripts/verify_ui_test_data.py` verifies login, library, unlocks, completion and history through the real Vite proxy using `CARTRIDGE_TEST_PASSWORD` or a password prompt. This API verification passed against the seeded account.
 
@@ -83,3 +83,17 @@ The CRT glass uses rounded optical edges, static scanlines, corner shading and a
 Sound effects are original, unmodified files from [Kenney's Interface Sounds](https://kenney.nl/assets/interface-sounds), licensed CC0. Six downloaded Ogg effects provide selection, buttons, cartridge seating, confirmation, errors and ejecting. No sound is generated or synthesized. Effects require user interaction and play quietly; the header sound button saves the player's preference. Source details and the original license are included under `public/audio/`.
 
 The updated layout was inspected in the browser at desktop and mobile widths. Internal scrolling leaves document scroll at zero and keeps the XP HUD visible. The sound toggle, corner filter and corrected slot alignment were checked in the live UI. All 14 automated tests pass, including slow/fast server loading, retries, overlapping requests, user-interaction gating and stopping playback when muted.
+
+## Real catalog and official images
+
+Games now accept an optional `image_url` through the existing game create/update API. Apply `games.0002_games_image_url` when setting up another database. In **Dev console → Games**, paste an official icon or box-art image URL; the editor shows a preview, and the image appears on the cartridge and catalog card. Leave it blank for a pixel fallback. Unavailable or invalid images also fall back to the deterministic icon.
+
+Most achievement names and descriptions come from public Steam Community lists. Steam store metadata supplies publisher-uploaded header artwork. Minecraft Bedrock/platform trophy definitions use a Minecraft Wiki reference snapshot; Gran Turismo 7 uses the published GTPlanet trophy list. Their images come from Microsoft and PlayStation, and the existing Mobile Legends entry uses its official App Store icon. Public lists that omit secret requirements get an explicit concealed-requirements message; no objective is invented. New achievements receive 100 Cartridge Hub XP, while converted rows retain their old XP values. These are app scores, not Steam or console rewards.
+
+Source URLs and metadata snapshots are under `data/`. Artwork is displayed from publisher/platform URLs rather than generated or downloaded into the app. `data/before_real_catalog.json` backs up the original catalog definitions. To repeat the additive, transactional import from `backend/`:
+
+```powershell
+./.venv/Scripts/python.exe -B manage.py shell -c "from pathlib import Path; exec(Path('../frontend/scripts/import_real_catalog.py').read_text(encoding='utf-8'))"
+```
+
+The import was rerun successfully without adding duplicate records. No grants, player accounts or library assignments were deleted. Migration, image-field serializer validation, real API responses, frontend build, 14 tests and live artwork rendering were checked.

@@ -6,6 +6,7 @@ Objectives are UI test fixtures, not the games' official achievement lists.
 import json
 import os
 import secrets
+from pathlib import Path
 from datetime import date, timedelta
 
 from django.contrib.auth import authenticate
@@ -17,6 +18,9 @@ from player_games.models import PlayerGames
 from player_achievements.models import PlayerAchievements
 from roles.models import Roles
 from levels.models import Levels
+
+if Path('../frontend/data/catalog_sources.json').exists():
+    raise RuntimeError('The real catalog is active. Use import_real_catalog.py; the old fixture seeder is disabled to prevent adding synthetic achievements.')
 
 GAMES = [
     ('Minecraft', 'Mojang Studios', 'Sandbox / Survival'),
