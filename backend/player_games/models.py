@@ -8,3 +8,6 @@ class PlayerGames(models.Model):
     id = models.AutoField(primary_key=True)
     game_id = models.ForeignKey(Games, on_delete=models.PROTECT)
     player_id = models.ForeignKey(PlayerProfiles, on_delete=models.PROTECT)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=('player_id', 'game_id'), name='unique_player_game')]

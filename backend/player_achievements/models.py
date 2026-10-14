@@ -9,3 +9,6 @@ class PlayerAchievements(models.Model):
     player_id = models.ForeignKey(PlayerProfiles, on_delete=models.PROTECT)
     achievement_id = models.ForeignKey(Achievements, on_delete=models.PROTECT)
     acquired_date = models.DateField()
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=('player_id', 'achievement_id'), name='unique_player_achievement')]

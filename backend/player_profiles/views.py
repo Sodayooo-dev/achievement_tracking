@@ -7,7 +7,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from player_profiles.models import PlayerProfiles
 from player_profiles.permissions import IsAdmin
-from player_profiles.serializers import PlayerProfileSerializer
+from player_profiles.serializers import PlayerProfileSerializer, RegistrationSerializer, SelfProfileSerializer
+from config.api import ResourceList, ResourceDetail, ResourceUpdate, ResourceDelete
 
 
 class PlayerProfileLogin(APIView):
@@ -47,7 +48,7 @@ class PlayerProfileRegister(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request):
-        serializer = PlayerProfileSerializer(data=request.data)
+        serializer = RegistrationSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(
@@ -59,41 +60,38 @@ class PlayerProfileRegister(APIView):
             status = status.HTTP_400_BAD_REQUEST
         )
 
-class PlayerProfileUpdate(APIView):
-    permission_classes = [IsAdmin]
-    def put(self, request,pk):
-        try:
-            profile = PlayerProfiles.objects.get(pk=pk)
-        except PlayerProfiles.DoesNotExist:
-            return Response(
-                data = {'message': 'Player profile does not exist'},
-                status = status.HTTP_404_NOT_FOUND
-            )
-        serializer = PlayerProfileSerializer(instance=profile, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(
-                data = serializer.data,
-                status = status.HTTP_200_OK
-            )
-        return Response(
-            data = serializer.errors,
-            status = status.HTTP_400_BAD_REQUEST
-        )
+class ProfileConfiguration:
+    model = PlayerProfiles
+    serializer_class = PlayerProfileSerializer
+    search_fields = ('username', 'first_name', 'last_name', 'email')
 
-class PlayerProfileDelete(APIView):
+
+class PlayerProfileList(ProfileConfiguration, ResourceList):
     permission_classes = [IsAdmin]
-    def delete(self, request,pk):
-        try:
-            profile = PlayerProfiles.objects.get(pk=pk)
-        except PlayerProfiles.DoesNotExist:
-            return Response(
-                data = {'message': 'Player profile does not exist'},
-                status = status.HTTP_404_NOT_FOUND
-            )
-        profile.delete()
-        return Response(
-            data = {'message': 'Player profile deleted'},
-            status = status.HTTP_200_OK
-        )
+
+
+class PlayerProfileDetail(ProfileConfiguration, ResourceDetail):
+    pass
+
+
+class PlayerProfileUpdate(ProfileConfiguration, ResourceUpdate):
+    pass
+
+
+class PlayerProfileDelete(ProfileConfiguration, ResourceDelete):
+    def delete(self, request, pk):
+        if request.user.pk == pk:
+            return Response({'message': 'You cannot delete your signed-in administrator account.'}, status=409)
+        return super().delete(request, pk)
+
+
+class CurrentProfile(APIView):
+    def get(self, request):
+        return Response(PlayerProfileSerializer(request.user).data)
+
+    def put(self, request):
+        serializer = SelfProfileSerializer(request.user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 

@@ -69,6 +69,16 @@ class GameArtworkUploadTests(TestCase):
         self.assertEqual(self.client.post('/api/games/new/', {**self.body, 'image': icon()}, format='multipart').status_code, 401)
         self.assertEqual(Games.objects.count(), 0)
 
+    def test_artwork_can_be_removed_without_deleting_the_game(self):
+        game = Games.objects.create(**self.body)
+        uploaded = self.client.put(f'/api/games/{game.pk}/update/', {**self.body, 'image': icon()}, format='multipart')
+        self.assertEqual(uploaded.status_code, 200)
+        response = self.client.put(f'/api/games/{game.pk}/update/', {**self.body, 'remove_image': True}, format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.data['image_url'])
+        game.refresh_from_db()
+        self.assertFalse(game.image)
+
     def test_corrupt_unsupported_and_oversized_images_are_rejected(self):
         files = [SimpleUploadedFile('fake.png', b'<html>not an image</html>', content_type='image/png'), icon('image.gif', 'GIF')]
         oversized = icon()

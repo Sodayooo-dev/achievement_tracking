@@ -1,62 +1,33 @@
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
+from config.api import ResourceList, ResourceCreate, ResourceDetail, ResourceUpdate, ResourceDelete
 from achievements.models import Achievements
 from achievements.serializers import AchievementsSerializer
-from player_profiles.permissions import IsAdmin
 
 
-class AchievementsList(APIView):
-    def get(self,request):
-        achievements = Achievements.objects.all()
-        serializer = AchievementsSerializer(achievements, many=True)
-        return Response(serializer.data)
+class Configuration:
+    model = Achievements
+    serializer_class = AchievementsSerializer
+    search_fields = ('name', 'description',)
+    filter_fields = ('game_id',)
+    scope_player = False
 
-class AchievementsCreate(APIView):
-    permission_classes = [IsAdmin]
-    def post(self,request):
-        serializer = AchievementsSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(
-            data=serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST
-        )
 
-class AchievementsDetail(APIView):
-    permission_classes = [IsAdmin]
-    def get(self,request,pk):
-        try:
-            achievement = Achievements.objects.get(pk=pk)
-        except Achievements.DoesNotExist:
-            return None
+class AchievementsList(Configuration, ResourceList):
+    pass
 
-class AchievementsUpdate(APIView):
-    permission_classes = [IsAdmin]
-    def put(self,request,pk):
-        try:
-            achievement = Achievements.objects.get(pk=pk)
-        except Achievements.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = AchievementsSerializer(achievement, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(
-            data=serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST
-        )
 
-class AchievementsDelete(APIView):
-    permission_classes = [IsAdmin]
-    def delete(self,request,pk):
-        try:
-            achievement = Achievements.objects.get(pk=pk)
-        except Achievements.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        achievement.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class AchievementsCreate(Configuration, ResourceCreate):
+    pass
+
+
+class AchievementsDetail(Configuration, ResourceDetail):
+    pass
+
+
+class AchievementsUpdate(Configuration, ResourceUpdate):
+    pass
+
+
+class AchievementsDelete(Configuration, ResourceDelete):
+    pass
 
 

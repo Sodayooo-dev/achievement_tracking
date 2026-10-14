@@ -9,3 +9,6 @@ class Achievements(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     exp_value = models.IntegerField()
+
+    class Meta:
+        constraints = [models.CheckConstraint(condition=models.Q(exp_value__gte=0), name='achievement_xp_nonnegative')]

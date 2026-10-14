@@ -1,4 +1,5 @@
 .venv
+__pycache__/
 .idea
 *.sqlite3
 *.env
@@ -7,3 +8,7 @@
 **/**/**0**.py
 !games/migrations/0002_games_image_url.py
 !games/migrations/0003_games_image.py
+!achievements/migrations/0002_integrity_constraints.py
+!levels/migrations/0002_integrity_constraints.py
+!player_games/migrations/0003_integrity_constraints.py
+!player_achievements/migrations/0003_integrity_constraints.py
