@@ -10,6 +10,8 @@ import './assets/main.css'
 import './assets/immersion.css'
 import './assets/frontloader.css'
 import './assets/artwork.css'
+import './assets/qa.css'
+import './assets/comfort.css'
 
 const app = createApp(App)
 

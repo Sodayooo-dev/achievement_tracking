@@ -1,8 +1,14 @@
-export function gridKeys(event: KeyboardEvent, columns: number) {
+export function gridKeys(event: KeyboardEvent, columns?: number) {
   const container = event.currentTarget as HTMLElement
   const cells = Array.from(container.querySelectorAll<HTMLElement>('[data-cell]'))
   const index = cells.indexOf(document.activeElement as HTMLElement)
   if (index < 0) return
+  if (!columns) {
+    const top = cells[0]?.getBoundingClientRect().top
+    columns =
+      cells.filter((cell) => Math.abs(cell.getBoundingClientRect().top - (top ?? 0)) < 3).length ||
+      1
+  }
   const moves: Record<string, number> = {
     ArrowRight: index + 1,
     ArrowLeft: index - 1,

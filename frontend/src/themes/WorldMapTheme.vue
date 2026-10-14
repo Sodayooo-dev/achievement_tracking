@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import type { ThemeItem } from '@/api/types'
 import AchievementDetail from './AchievementDetail.vue'
+const mobile = ref(window.innerWidth < 768)
+function resize() {
+  mobile.value = window.innerWidth < 768
+}
+onMounted(() => window.addEventListener('resize', resize))
+onUnmounted(() => window.removeEventListener('resize', resize))
 const props = defineProps<{ items: ThemeItem[] }>(),
   selected = ref<ThemeItem | null>(null)
 const sorted = computed(() => [...props.items].sort((a, b) => a.id - b.id))
@@ -31,7 +37,7 @@ const path = computed(() =>
       <div
         class="map-stage"
         :style="{
-          height: Math.max(200, Math.ceil(items.length / 4) * 130) + 'px',
+          height: Math.max(200, (mobile ? items.length : Math.ceil(items.length / 4)) * 130) + 'px',
         }"
       >
         <svg
@@ -48,20 +54,22 @@ const path = computed(() =>
         ><button
           v-for="(item, i) in sorted"
           :key="item.id"
+          :data-achievement-id="item.id"
+          data-cell
           class="map-node"
           :class="{ unlocked: item.unlocked, recent: recent === item.id }"
-          :style="{ left: point(i).x / 6 + '%', top: point(i).y + 'px' }"
-          :aria-label="`${item.unlocked ? item.name : 'Locked level'}: ${item.description}`"
+          :style="{ left: point(i).x / 6 + '%', top: (mobile ? 60 + i * 130 : point(i).y) + 'px' }"
+          :aria-label="`${item.name}: ${item.unlocked ? 'Unlocked' : 'Locked'} achievement`"
           @focus="selected = item"
           @click="selected = item"
         >
           <span>{{ item.unlocked ? '⚑' : String(i + 1).padStart(2, '0') }}</span
-          ><small>{{ item.unlocked ? item.name : '???' }}</small
+          ><small>{{ item.name }}</small
           ><i v-if="recent === item.id" aria-hidden="true">▼</i>
         </button>
       </div>
     </div>
-    <AchievementDetail v-if="selected" :item="selected" />
-    <p class="inspect-hint" v-else>Select a level. Your latest clear is marked with a cursor.</p>
+
+    <p class="inspect-hint">Select a level. Your latest clear is marked with a cursor.</p>
   </div>
 </template>

@@ -1,0 +1,435 @@
+/* Reserve the screen for the collection; hardware controls stay outside its scroller. */
+.app-shell {
+  max-width: 1440px;
+  padding: 14px 22px 10px;
+  gap: 10px;
+}
+.app-header {
+  min-height: 56px;
+  gap: 22px;
+}
+.app-header nav a {
+  padding: 9px 12px;
+}
+.wordmark small {
+  font-size: 7px;
+  margin-top: 2px;
+}
+.hardware-strip {
+  align-items: center;
+  min-height: 40px;
+  padding: 4px 16px;
+  margin-bottom: 6px;
+}
+.hardware-eject {
+  min-height: 44px;
+  padding: 6px 13px;
+  gap: 8px;
+  font: 700 13px/1 var(--font-body);
+  color: #1e1b18;
+  background: #e8e3d9;
+  border: 1px solid #746d61;
+  box-shadow: 2px 2px 0 #746d61;
+  letter-spacing: 0.3px;
+}
+.hardware-eject span {
+  font-size: 18px;
+}
+.hardware-eject:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.xp-hud {
+  min-height: 64px;
+  margin-top: -10px;
+  padding: 8px 18px;
+  gap: 16px;
+}
+.level-badge {
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px;
+  gap: 4px;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+}
+.level-badge strong {
+  font-size: 19px;
+}
+.xp-info > div:first-child {
+  margin-bottom: 7px;
+}
+.xp-track {
+  height: 10px;
+}
+.total-xp {
+  padding-left: 18px;
+  min-width: 118px;
+}
+.total-xp strong {
+  font-size: 17px;
+}
+.under-shell {
+  padding-top: 0;
+  font-size: 7px;
+}
+.page-content {
+  padding: 22px 26px;
+}
+.play-page {
+  padding: 16px 20px 24px;
+}
+.game-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 0 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #aaa395;
+}
+.game-bar-art {
+  flex: 0 0 68px;
+  width: 68px;
+  height: 32px;
+}
+.game-bar-title {
+  flex: 1;
+  min-width: 0;
+}
+.game-bar h1 {
+  font: 700 22px/1.2 var(--font-body);
+  letter-spacing: -0.4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.game-bar small {
+  display: block;
+  margin-top: 3px;
+  font: 12px/1.2 var(--font-body);
+  color: #6e665b;
+}
+.game-bar-progress {
+  font: 700 14px/1.4 var(--font-body);
+  white-space: nowrap;
+}
+.game-bar-progress > span {
+  color: #786121;
+}
+.game-info-button {
+  width: 44px;
+  min-height: 44px;
+  padding: 6px;
+  font-size: 22px;
+  box-shadow: none;
+  background: transparent;
+  border-color: transparent;
+}
+.compact-controls {
+  display: grid;
+  grid-template-columns: minmax(170px, 1fr) auto auto;
+  grid-template-areas: 'search status actions';
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  align-items: center;
+}
+.achievement-search {
+  grid-area: search;
+}
+.achievement-search input {
+  margin: 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+.status-switch {
+  grid-area: status;
+}
+.view-switch {
+  grid-area: view;
+}
+.control-actions {
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.status-switch,
+.view-switch {
+  display: flex;
+  border: 1px solid #8c867b;
+}
+.status-switch button,
+.view-switch button {
+  min-height: 44px;
+  padding: 9px 12px;
+  font: 700 13px/1.4 var(--font-body);
+  box-shadow: none;
+  border: 0;
+  border-right: 1px solid #8c867b;
+  background: #f7f4ec;
+  color: #1e1b18;
+}
+.view-switch button {
+  min-width: 44px;
+  font-size: 20px;
+  padding: 6px;
+}
+.status-switch button:last-child,
+.view-switch button:last-child {
+  border-right: 0;
+}
+.status-switch button[aria-pressed='true'],
+.view-switch button[aria-pressed='true'] {
+  background: #1e1b18;
+  color: #f7f4ec;
+}
+.secondary-filter-button {
+  grid-area: filters;
+  min-height: 44px;
+  padding: 9px 12px;
+  font: 700 13px/1.4 var(--font-body);
+  background: #f7f4ec;
+  color: #1e1b18;
+  box-shadow: 2px 2px 0 #8c867b;
+  border: 1px solid #8c867b;
+}
+.filter-dot {
+  font-size: 8px;
+  color: #d7263d;
+}
+.compact-results {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 12px 0 18px;
+  opacity: 0.8;
+}
+.secondary-filters {
+  display: grid;
+  gap: 24px;
+}
+.secondary-filters label {
+  font-size: 14px;
+}
+.secondary-filters > button {
+  justify-self: end;
+}
+.genre-screen {
+  padding: 16px 18px;
+}
+.inventory-board,
+.skill-tree,
+.world-map,
+.combat-hud,
+.fighter-select,
+.trophy-cabinet,
+.quest-journal {
+  padding: 0;
+}
+.genre-screen .theme-heading {
+  display: none;
+}
+.genre-screen .inspect-hint {
+  display: none;
+}
+.theme-heading {
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+}
+.theme-heading span:last-child {
+  display: none;
+}
+.tree-stage {
+  padding: 0;
+}
+.tree-nodes {
+  gap: 20px;
+}
+.inspect-hint {
+  margin-top: 14px;
+}
+.frontloader-machine {
+  width: min(620px, 100%);
+}
+.frontloader-illustration {
+  max-height: 340px;
+}
+.cartridge-sequence {
+  gap: 8px;
+}
+.cartridge-sequence .boot-progress {
+  overflow: hidden;
+}
+@media (max-width: 1000px) {
+  .compact-controls {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'search actions' 'status status';
+  }
+  .status-switch {
+    justify-self: start;
+  }
+  .view-switch {
+    justify-self: end;
+  }
+  .app-header {
+    gap: 14px;
+  }
+  .app-header nav a {
+    padding-inline: 8px;
+  }
+}
+@media (max-width: 767px) {
+  .app-shell {
+    padding: 10px 8px calc(73px + env(safe-area-inset-bottom, 0px));
+    gap: 8px;
+  }
+  .app-header {
+    min-height: 44px;
+    gap: 10px;
+  }
+  .app-header nav {
+    min-height: 64px;
+    padding-top: 4px;
+    padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
+  }
+  .app-header nav a {
+    min-height: 56px;
+    padding: 7px 10px;
+  }
+  .hardware-strip {
+    min-height: 32px;
+    padding: 3px 12px;
+    margin-bottom: 5px;
+  }
+  .hardware-strip:has(.hardware-eject) {
+    min-height: 48px;
+  }
+  .hardware-eject {
+    min-height: 44px;
+    padding: 6px 10px;
+  }
+  .xp-hud {
+    margin-top: -8px;
+    padding: 8px 12px;
+    gap: 10px;
+    min-height: 60px;
+  }
+  .level-badge {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+  .level-badge strong {
+    font-size: 17px;
+  }
+  .xp-track {
+    height: 9px;
+  }
+  .page-content {
+    padding: 18px 14px;
+  }
+  .play-page {
+    padding: 12px 12px 20px;
+  }
+  .game-bar {
+    gap: 9px;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+  }
+  .game-bar-art {
+    display: none;
+  }
+  .game-bar h1 {
+    font-size: 18px;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .game-bar small {
+    display: none;
+  }
+  .game-bar-progress {
+    font-size: 12px;
+  }
+  .game-info-button {
+    width: 44px;
+    flex-shrink: 0;
+  }
+  .compact-controls {
+    gap: 8px;
+  }
+  .status-switch {
+    width: 100%;
+  }
+  .status-switch button {
+    flex: 1;
+    min-width: 44px;
+    padding: 8px 9px;
+  }
+  .control-actions {
+    gap: 8px;
+  }
+  .view-switch button[aria-pressed='true'] {
+    display: none;
+  }
+  .view-switch button {
+    border-right: 0;
+  }
+  .compact-results span {
+    display: none;
+  }
+  .inventory-board,
+  .skill-tree,
+  .world-map,
+  .combat-hud,
+  .fighter-select,
+  .trophy-cabinet,
+  .quest-journal {
+    padding: 0;
+  }
+  .genre-screen {
+    padding: 12px;
+  }
+  .frontloader-illustration {
+    max-height: 240px;
+  }
+  .modal:has(.secondary-filters) {
+    align-self: flex-end;
+    margin-bottom: 8px;
+  }
+}
+@media (max-height: 550px) {
+  .app-shell {
+    padding-top: 6px;
+    gap: 6px;
+  }
+  .app-header {
+    min-height: 40px;
+  }
+  .xp-hud {
+    padding-block: 5px;
+    min-height: 50px;
+    margin-top: -6px;
+  }
+  .level-badge {
+    height: 36px;
+    width: 36px;
+    min-width: 36px;
+  }
+  .frontloader-illustration {
+    max-height: 155px;
+  }
+  .cartridge-sequence .frontloader-machine {
+    zoom: 1;
+  }
+  .cartridge-sequence .eyebrow {
+    display: none;
+  }
+}

@@ -42,8 +42,120 @@ const {
   soundEnabled,
   installUiSounds,
   useCartridgeLoad,
+  cartridgePose,
+  frontloader,
 } = await import('../node_modules/.tmp/core-tests/core.mjs')
+test('cartridge crosses a shared aperture continuously and fits its full travel', () => {
+  assert.ok(frontloader.slot.top < frontloader.seam)
+  assert.ok(frontloader.seam + frontloader.thickness < frontloader.slot.bottom)
+  let previousY = 0
+  const [leadingLeft, leadingRight, trailingRight, trailingLeft] = frontloader.top
+  for (let elapsed = 0; elapsed <= frontloader.duration; elapsed += 10) {
+    const { y } = cartridgePose(elapsed)
+    assert.ok(y <= previousY)
+    previousY = y
+    const localSeam = frontloader.seam - y
+    if (localSeam >= leadingLeft[1] && localSeam <= trailingLeft[1]) {
+      const ratio = (localSeam - leadingLeft[1]) / (trailingLeft[1] - leadingLeft[1])
+      assert.ok(
+        leadingLeft[0] + (trailingLeft[0] - leadingLeft[0]) * ratio - 1 >= frontloader.slot.left,
+      )
+      assert.ok(
+        leadingRight[0] + (trailingRight[0] - leadingRight[0]) * ratio + 1 <=
+          frontloader.slot.right,
+      )
+    }
+  }
+  const seated = cartridgePose(frontloader.duration)
+  assert.ok(
+    Math.max(...frontloader.top.map((p) => p[1])) + frontloader.thickness + seated.y + 1 <
+      frontloader.slot.top,
+  )
+})
+test('insertion labels and mechanical progress follow the same timeline', () => {
+  assert.equal(cartridgePose(0).phase, 'ALIGNING CARTRIDGE')
+  assert.equal(cartridgePose(450).phase, 'INSERTING CARTRIDGE')
+  assert.equal(cartridgePose(1700).phase, 'CARTRIDGE LOCKED')
+  assert.equal(cartridgePose(1900).phase, 'READING SAVE DATA')
+  assert.equal(cartridgePose(frontloader.duration).progress, 1)
+  assert.equal(cartridgePose(frontloader.duration + 1000).y, -180)
+})
 const originalFetch = globalThis.fetch
+test('multipart artwork uploads preserve FormData and let the browser set its boundary', async () => {
+  setAccessToken('upload-token')
+  const data = new FormData()
+  data.append('title', 'Test game')
+  data.append('image', new Blob(['fixture'], { type: 'image/png' }), 'icon.png')
+  globalThis.fetch = async (_url, options) => {
+    assert.equal(options.body, data)
+    assert.equal(options.headers['Content-Type'], undefined)
+    assert.equal(options.headers.Authorization, 'Bearer upload-token')
+    return Response.json({ image_url: '/media/game_icons/icon.png' })
+  }
+  assert.equal((await request('games/new/', 'POST', data)).image_url, '/media/game_icons/icon.png')
+})
+test('simultaneous authenticated 401s share one refresh and retry with the new token', async () => {
+  setAccessToken('expired', 'refresh-fixture')
+  let renewals = 0
+  globalThis.fetch = async (url, init) => {
+    if (url.includes('token/refresh')) {
+      renewals++
+      await Promise.resolve()
+      return Response.json({ access: 'renewed' })
+    }
+    return init.headers.Authorization === 'Bearer renewed'
+      ? Response.json({ ok: true })
+      : Response.json({}, { status: 401 })
+  }
+  const results = await Promise.all([request('games/'), request('levels/')])
+  assert.equal(renewals, 1)
+  assert.ok(results.every((result) => result.ok))
+  setAccessToken('')
+})
+test('a refresh response cannot overwrite a newer login', async () => {
+  setAccessToken('old', 'old-refresh')
+  let complete, started
+  const ready = new Promise((resolve) => {
+    started = resolve
+  })
+  const delayed = new Promise((resolve) => {
+    complete = resolve
+  })
+  globalThis.fetch = async (url) => {
+    if (url.includes('token/refresh')) {
+      started()
+      await delayed
+      return Response.json({ access: 'stale' })
+    }
+    return Response.json({}, { status: 401 })
+  }
+  const oldRequest = request('games/')
+  await ready
+  setAccessToken('new-login')
+  complete()
+  await assert.rejects(oldRequest)
+  globalThis.fetch = async (_url, init) => {
+    assert.equal(init.headers.Authorization, 'Bearer new-login')
+    return Response.json({})
+  }
+  await request('games/')
+  setAccessToken('')
+})
+test('catalog shares pending requests and reuses cached data until explicit refresh', async () => {
+  setActivePinia(createPinia())
+  let calls = 0
+  globalThis.fetch = async () => {
+    calls++
+    return Response.json([])
+  }
+  const catalog = useCatalog()
+  await Promise.all([catalog.load(), catalog.load()])
+  assert.equal(calls, 3)
+  await catalog.load()
+  assert.equal(calls, 3)
+  await catalog.load(true)
+  assert.equal(calls, 6)
+})
 test('cartridge loading waits for slow server data after animation completion', async () => {
   let resolveData
   const data = new Promise((resolve) => {
@@ -234,7 +346,7 @@ test('DRF field errors, forbidden responses, no-content deletes and network fail
   }
   await assert.rejects(request('games/'), (e) => e.status === 0)
 })
-test('registration supplies player role and starting level, then signs in', async () => {
+test('registration leaves role and starting level to the server, then signs in', async () => {
   setActivePinia(createPinia())
   let payload
   globalThis.fetch = async (url, init) => {
@@ -249,8 +361,8 @@ test('registration supplies player role and starting level, then signs in', asyn
   }
   const session = useSession()
   await session.register({ username: 'sam', password: 'test-only' })
-  assert.equal(payload.role, 2)
-  assert.equal(payload.level, 1)
+  assert.equal(payload.role, undefined)
+  assert.equal(payload.level, undefined)
   assert.equal(session.isLoggedIn, true)
   assert.equal(session.isAdmin, false)
   session.logout()

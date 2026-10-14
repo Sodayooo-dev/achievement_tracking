@@ -30,6 +30,18 @@
   animation: none;
   width: 0;
 }
+.cartridge-sequence .boot-progress.is-reading > span {
+  width: 30% !important;
+  animation: reading-pulse 1s ease-in-out infinite;
+}
+@keyframes reading-pulse {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(340%);
+  }
+}
 @media (max-width: 767px) {
   .frontloader-machine {
     width: 100%;

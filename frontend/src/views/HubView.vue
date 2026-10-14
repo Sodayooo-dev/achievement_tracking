@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { usePlayer } from '@/stores/player'
 import Cartridge from '@/components/library/Cartridge.vue'
 import { gridKeys } from '@/composables/useGridKeys'
+import GameSelect from '@/components/ui/GameSelect.vue'
 const player = usePlayer(),
   sort = ref('title')
 const games = computed(() =>
@@ -16,7 +17,7 @@ const completed = computed(
   () => games.value.filter((g) => player.completion(g.id).pct === 100).length,
 )
 function keys(event: KeyboardEvent) {
-  gridKeys(event, window.innerWidth < 768 ? 2 : 3)
+  gridKeys(event)
 }
 </script>
 <template>
@@ -50,11 +51,14 @@ function keys(event: KeyboardEvent) {
       </h2>
       <label class="inline-label"
         >Sort by
-        <select v-model="sort">
-          <option value="title">Title A–Z</option>
-          <option value="completion">Completion</option>
-        </select></label
-      >
+        <GameSelect
+          v-model="sort"
+          label="Library sort"
+          :options="[
+            { value: 'title', label: 'Title A–Z' },
+            { value: 'completion', label: 'Completion' },
+          ]"
+      /></label>
     </div>
     <div v-if="games.length" class="cartridge-shelf" @keydown="keys">
       <Cartridge
@@ -68,7 +72,7 @@ function keys(event: KeyboardEvent) {
     <div v-else class="state empty-shelf">
       <span aria-hidden="true">▦</span>
       <h2>A fresh shelf. A new adventure.</h2>
-      <p>No cartridges yet. Ask a developer to add games to your library.</p>
+      <p>No cartridges yet. Add your first game from the catalog.</p>
       <RouterLink to="/catalog" class="button">Explore the catalog →</RouterLink>
     </div>
     <div class="shelf-footer">

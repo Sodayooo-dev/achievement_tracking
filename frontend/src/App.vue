@@ -16,9 +16,14 @@ function expire() {
   void router.push('/game-over')
 }
 window.addEventListener('session-expired', expire)
+function refreshed(event: Event) {
+  session.adoptAccess((event as CustomEvent<string>).detail)
+}
+window.addEventListener('token-refreshed', refreshed)
 const removeUiSounds = installUiSounds()
 onUnmounted(() => {
   window.removeEventListener('session-expired', expire)
+  window.removeEventListener('token-refreshed', refreshed)
   removeUiSounds()
 })
 </script>

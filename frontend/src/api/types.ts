@@ -10,6 +10,7 @@ export interface Game {
   publisher: string
   genre: string
   image_url?: string
+  image?: string | null
 }
 export interface Achievement {
   id: number

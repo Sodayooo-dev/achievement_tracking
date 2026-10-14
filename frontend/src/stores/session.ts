@@ -7,7 +7,17 @@ import { setAccessToken } from '@/api/client'
 export const useSession = defineStore('session', () => {
   const access = ref(readSaved<string>('ch.access', ''))
   const profile = ref(readSaved<Profile | null>('ch.profile', null))
-  setAccessToken(access.value)
+  setAccessToken(access.value, readSaved<string>('ch.refresh', ''))
+  function adoptAccess(value: string) {
+    access.value = value
+  }
+  async function loadProfile() {
+    const id = profile.value?.id
+    const result = await api.getMe()
+    if (profile.value?.id !== id) return
+    profile.value = result
+    save('ch.profile', profile.value)
+  }
   const isLoggedIn = computed(() => Boolean(access.value && profile.value?.id))
   const isAdmin = computed(
     () => profile.value?.role === Number(import.meta.env.VITE_ADMIN_ROLE_ID ?? 1),
@@ -15,7 +25,8 @@ export const useSession = defineStore('session', () => {
   async function login(username: string, password: string) {
     const result = await api.login(username, password)
     access.value = result.tokens.access
-    setAccessToken(access.value)
+    setAccessToken(access.value, result.tokens.refresh)
+    save('ch.refresh', result.tokens.refresh)
     profile.value = result.profile
     save('ch.access', access.value)
     save('ch.profile', profile.value)
@@ -23,8 +34,6 @@ export const useSession = defineStore('session', () => {
   async function register(form: Record<string, string>) {
     await api.register({
       ...form,
-      role: Number(import.meta.env.VITE_DEFAULT_ROLE_ID ?? 2),
-      level: Number(import.meta.env.VITE_DEFAULT_LEVEL_ID ?? 1),
     })
     try {
       await login(form.username!, form.password!)
@@ -38,6 +47,7 @@ export const useSession = defineStore('session', () => {
     profile.value = null
     save('ch.access', '')
     save('ch.profile', null)
+    save('ch.refresh', '')
   }
   return {
     access,
@@ -48,5 +58,7 @@ export const useSession = defineStore('session', () => {
     register,
     logout,
     expire: logout,
+    adoptAccess,
+    loadProfile,
   }
 })

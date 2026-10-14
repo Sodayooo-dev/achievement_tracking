@@ -10,7 +10,7 @@ defineProps<{ item: ThemeItem }>()
       <p class="eyebrow">
         {{ item.unlocked ? 'ACHIEVEMENT UNLOCKED' : 'LOCKED OBJECTIVE' }}
       </p>
-      <h3>{{ item.unlocked ? item.name : '???' }}</h3>
+      <h3>{{ item.name }}</h3>
       <p>{{ item.description }}</p>
       <small>{{
         item.acquired_date

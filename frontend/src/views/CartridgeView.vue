@@ -1,18 +1,22 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, inject, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCatalog } from '@/stores/catalog'
 import { usePlayer } from '@/stores/player'
 import { genreToTheme, themeNames } from '@/lib/genre'
-import { themes } from '@/themes/registry'
 import CartridgeInsert from '@/components/fx/CartridgeInsert.vue'
 import { useCartridgeLoad } from '@/composables/useCartridgeLoad'
 import LoadState from '@/components/ui/LoadState.vue'
+import AchievementBrowser from '@/components/ui/AchievementBrowser.vue'
+import GameArtwork from '@/components/ui/GameArtwork.vue'
+import Modal from '@/components/ui/Modal.vue'
+import { cartridgeControlKey } from '@/lib/cartridgeControl'
 const route = useRoute(),
   catalog = useCatalog(),
   player = usePlayer()
 const { loading, error, inserting, loadGame, animationFinished } = useCartridgeLoad(async () => {
   await catalog.load()
+  await catalog.loadGame(Number(route.params.gameId))
   await player.load()
 })
 watch(
@@ -34,24 +38,36 @@ const items = computed(() =>
     })),
 )
 const completion = computed(() => player.completion(game.value?.id ?? 0))
+const insertionLocked = inject(cartridgeControlKey, null),
+  information = ref(false)
+watch(
+  [game, inserting],
+  () => {
+    if (insertionLocked) insertionLocked.value = Boolean(game.value && inserting.value)
+  },
+  { immediate: true },
+)
+onUnmounted(() => {
+  if (insertionLocked) insertionLocked.value = false
+})
 </script>
 <template>
   <section v-if="game" class="page-content play-page">
-    <RouterLink v-if="!inserting" class="back-link" data-sound="back" to="/hub"
-      >← Eject cartridge / back to library</RouterLink
-    >
-    <div v-if="!inserting" class="page-heading">
-      <div>
-        <p class="eyebrow">{{ game.genre }} / {{ themeNames[key] }}</p>
-        <h1>{{ game.title }}<span class="red">.</span></h1>
-        <p>{{ game.publisher }}</p>
+    <header v-if="!inserting" class="game-bar">
+      <GameArtwork class="game-bar-art" :title="game.title" :url="game.image_url" />
+      <div class="game-bar-title">
+        <h1 :title="game.title">{{ game.title }}</h1>
+        <small>{{ themeNames[key] }}</small>
       </div>
-      <div class="game-completion">
-        <strong
-          >{{ completion.got }}<span> / {{ completion.total }} ★</span></strong
-        ><small>{{ Math.round(completion.pct) }}% COMPLETE</small>
-      </div>
-    </div>
+      <span
+        class="game-bar-progress"
+        :aria-label="`${completion.got} of ${completion.total} unlocked, ${Math.round(completion.pct)} percent complete`"
+        >{{ completion.got }} / {{ completion.total }} <span aria-hidden="true">★</span></span
+      >
+      <button class="game-info-button" aria-label="Game information" @click="information = true">
+        ⓘ
+      </button>
+    </header>
     <CartridgeInsert
       v-if="inserting"
       :key="game.id"
@@ -65,9 +81,17 @@ const completion = computed(() => player.completion(game.value?.id ?? 0))
         <p>A developer can add achievements to get you started.</p>
       </div>
       <div v-else class="genre-screen" :class="key">
-        <component :is="themes[key]" :game="game" :items="items" :completion="completion" />
+        <AchievementBrowser :theme="key" :game="game" :items="items" :completion="completion" />
       </div>
     </LoadState>
+    <Modal v-if="information" :title="game.title" @close="information = false"
+      ><p>{{ game.publisher }}</p>
+      <p>{{ game.genre }} · {{ themeNames[key] }}</p>
+      <p>
+        {{ completion.got }} of {{ completion.total }} achievements ·
+        {{ Math.round(completion.pct) }}% complete
+      </p></Modal
+    >
   </section>
   <LoadState v-else :loading="loading" :error="error" @retry="loadGame"
     ><div class="state">

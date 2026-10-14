@@ -3,15 +3,16 @@ import { computed, ref } from 'vue'
 import type { ThemeItem } from '@/api/types'
 import PixelIcon from '@/components/ui/PixelIcon.vue'
 import AchievementDetail from './AchievementDetail.vue'
-const props = defineProps<{ items: ThemeItem[] }>(),
+const props = defineProps<{ items: ThemeItem[]; allItems?: ThemeItem[] }>(),
   selected = ref<ThemeItem | null>(null)
 const shelves = computed(() => {
-  const sorted = [...props.items].sort((a, b) => b.exp_value - a.exp_value || a.id - b.id)
+  const sorted = [...(props.allItems ?? props.items)].sort(
+    (a, b) => b.exp_value - a.exp_value || a.id - b.id,
+  )
   return [0, 1, 2].map((tier) =>
-    sorted.slice(
-      Math.ceil((sorted.length * tier) / 3),
-      Math.ceil((sorted.length * (tier + 1)) / 3),
-    ),
+    sorted
+      .slice(Math.ceil((sorted.length * tier) / 3), Math.ceil((sorted.length * (tier + 1)) / 3))
+      .filter((a) => props.items.some((item) => item.id === a.id)),
   )
 })
 </script>
@@ -31,20 +32,22 @@ const shelves = computed(() => {
         <button
           v-for="item in shelf"
           :key="item.id"
+          :data-achievement-id="item.id"
+          data-cell
           :class="{ unlocked: item.unlocked }"
-          :aria-label="`${item.unlocked ? item.name : 'Locked trophy'}: ${item.description}`"
+          :aria-label="`${item.name}: ${item.unlocked ? 'Unlocked' : 'Locked'} achievement`"
           @focus="selected = item"
           @click="selected = item"
         >
           <span class="trophy-shape"><PixelIcon :name="item.name" :locked="!item.unlocked" /></span
-          ><strong>{{ item.unlocked ? item.name : '???' }}</strong
+          ><strong>{{ item.name }}</strong
           ><small>{{ item.exp_value }} XP</small>
         </button>
         <p v-if="!shelf.length">An empty shelf, full of possibility.</p>
       </div>
     </div>
-    <AchievementDetail v-if="selected" :item="selected" />
-    <p class="inspect-hint" v-else>
+
+    <p class="inspect-hint">
       Trophy tiers are ranked by XP within this game. Select one to inspect.
     </p>
   </div>

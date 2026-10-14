@@ -1,24 +1,25 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, onUnmounted, reactive, ref, watch } from 'vue'
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router'
 import { useCatalog } from '@/stores/catalog'
-import { usePlayer } from '@/stores/player'
 import { useSession } from '@/stores/session'
-import { useAsync } from '@/composables/useAsync'
 import * as api from '@/api/endpoints'
-import { ApiError } from '@/api/client'
+import { request, ApiError } from '@/api/client'
 import type { PlayerAchievement, PlayerGame, Profile } from '@/api/types'
+import { readSaved, save } from '@/lib/storage'
 import Modal from '@/components/ui/Modal.vue'
-import LoadState from '@/components/ui/LoadState.vue'
+import GameSelect from '@/components/ui/GameSelect.vue'
 import GameArtwork from '@/components/ui/GameArtwork.vue'
 type Row = Record<string, unknown> & { id: number }
 type Field = {
   key: string
   label: string
   type?: string
-  source?: 'games' | 'achievements' | 'levels'
+  source?: 'games' | 'achievements' | 'levels' | 'players'
+  optional?: boolean
 }
 const editors: Record<string, { title: string; resource: string; fields: Field[] }> = {
+  overview: { title: 'Overview', resource: '', fields: [] },
   games: {
     title: 'Games',
     resource: 'games',
@@ -26,39 +27,41 @@ const editors: Record<string, { title: string; resource: string; fields: Field[]
       { key: 'title', label: 'Title' },
       { key: 'publisher', label: 'Publisher' },
       { key: 'genre', label: 'Genre' },
-      { key: 'image_url', label: 'Official game image URL (optional)', type: 'url' },
     ],
   },
   achievements: {
     title: 'Achievements',
     resource: 'achievements',
     fields: [
-      { key: 'game_id', label: 'Game', type: 'number', source: 'games' },
+      { key: 'game_id', label: 'Game', source: 'games' },
       { key: 'name', label: 'Name' },
-      { key: 'description', label: 'Description', type: 'textarea' },
-      { key: 'exp_value', label: 'XP value', type: 'number' },
+      { key: 'description', label: 'Objective', type: 'textarea' },
+      { key: 'exp_value', label: 'XP', type: 'number' },
     ],
   },
-  levels: {
-    title: 'Levels',
-    resource: 'levels',
+  players: {
+    title: 'Players',
+    resource: 'players',
     fields: [
-      { key: 'number', label: 'Level number', type: 'number' },
-      { key: 'exp_required', label: 'Required XP', type: 'number' },
-      { key: 'title', label: 'Title' },
+      { key: 'username', label: 'Username' },
+      { key: 'first_name', label: 'First name', optional: true },
+      { key: 'last_name', label: 'Last name', optional: true },
+      { key: 'email', label: 'Email', type: 'email', optional: true },
+      { key: 'level', label: 'Profile starting level', source: 'levels' },
+      {
+        key: 'password',
+        label: 'New password (leave blank to preserve)',
+        type: 'password',
+        optional: true,
+      },
     ],
   },
   grants: {
     title: 'Achievement grants',
     resource: 'player_achievements',
     fields: [
-      { key: 'player_id', label: 'Player ID', type: 'number' },
-      {
-        key: 'achievement_id',
-        label: 'Achievement',
-        type: 'number',
-        source: 'achievements',
-      },
+      { key: 'player_id', label: 'Player', source: 'players' },
+      { key: 'achievement_id', label: 'Achievement', source: 'achievements' },
       { key: 'acquired_date', label: 'Acquired date', type: 'date' },
     ],
   },
@@ -66,192 +69,375 @@ const editors: Record<string, { title: string; resource: string; fields: Field[]
     title: 'Player libraries',
     resource: 'player_games',
     fields: [
-      { key: 'player_id', label: 'Player ID', type: 'number' },
-      { key: 'game_id', label: 'Game', type: 'number', source: 'games' },
+      { key: 'player_id', label: 'Player', source: 'players' },
+      { key: 'game_id', label: 'Game', source: 'games' },
     ],
   },
-  players: {
-    title: 'Player profiles',
-    resource: '',
+  levels: {
+    title: 'Levels',
+    resource: 'levels',
     fields: [
-      { key: 'username', label: 'Username' },
-      { key: 'first_name', label: 'First name' },
-      { key: 'last_name', label: 'Last name' },
-      { key: 'email', label: 'Email', type: 'email' },
-      {
-        key: 'level',
-        label: 'Starting level',
-        type: 'number',
-        source: 'levels',
-      },
-      {
-        key: 'password',
-        label: 'Password (leave blank to preserve)',
-        type: 'password',
-      },
+      { key: 'number', label: 'Level number', type: 'number' },
+      { key: 'title', label: 'Rank title' },
+      { key: 'exp_required', label: 'Required lifetime XP', type: 'number' },
     ],
   },
 }
 const route = useRoute(),
   catalog = useCatalog(),
-  player = usePlayer(),
   session = useSession()
-const key = computed(() => String(route.params.editor ?? 'games'))
-const config = computed(() => editors[key.value] ?? editors.games!)
-const allLibrary = ref<PlayerGame[]>([]),
-  allGrants = ref<PlayerAchievement[]>([])
-const form = reactive<Record<string, string | number>>({}),
-  editId = ref<number | null>(null),
+const key = computed(() => String(route.params.editor ?? 'overview'))
+const config = computed(() => editors[key.value] ?? editors.overview!)
+const rows = ref<Row[]>([]),
+  count = ref(0),
+  page = ref(1),
+  search = ref(''),
+  gameFilter = ref<string | number>('')
+const loading = ref(false),
   busy = ref(false),
   message = ref(''),
   error = ref(''),
-  fieldErrors = ref<Record<string, unknown>>({}),
-  deleting = ref<Row | null>(null),
-  search = ref(''),
-  gameFilter = ref('')
-const snapshot = ref(''),
-  playerId = ref<number | undefined>(),
-  preservedRole = ref<number | null>(null)
-const {
-  loading,
-  error: loadError,
-  run,
-} = useAsync(async () => {
-  await catalog.load()
-  ;[allLibrary.value, allGrants.value] = await Promise.all([api.getLibrary(), api.getUnlocks()])
-  await player.load()
-})
-void run()
-const rows = computed<Row[]>(() => {
-  let source: unknown[] =
-    key.value === 'games'
-      ? catalog.games
-      : key.value === 'achievements'
-        ? catalog.achievements
-        : key.value === 'levels'
-          ? catalog.levels
-          : key.value === 'grants'
-            ? allGrants.value
-            : key.value === 'library'
-              ? allLibrary.value
-              : []
-  return (source as Row[]).filter(
-    (row) =>
-      (!gameFilter.value || row.game_id === Number(gameFilter.value)) &&
-      JSON.stringify(row).toLowerCase().includes(search.value.toLowerCase()),
-  )
-})
-const suggestions = computed(() =>
-  [...new Set([...allLibrary.value, ...allGrants.value].map((row) => row.player_id))].sort(
-    (a, b) => a - b,
-  ),
+  fieldErrors = ref<Record<string, unknown>>({})
+const editing = ref(false),
+  editId = ref<number | null>(null),
+  form = reactive<Record<string, string | number>>({}),
+  baseline = ref('')
+const deleting = ref<Row | null>(null),
+  dependencies = ref<Record<string, number>>({})
+const confirmAction = ref<null | (() => void)>(null)
+const imageFile = ref<File | null>(null),
+  imagePreview = ref(''),
+  removeImage = ref(false),
+  fileInput = ref<HTMLInputElement>()
+const players = ref<Profile[]>([]),
+  playerSearch = ref(''),
+  playerLibrary = ref<PlayerGame[]>([]),
+  playerUnlocks = ref<PlayerAchievement[]>([]),
+  grantGame = ref<string | number>('')
+const totals = ref({ players: 0, libraries: 0, grants: 0 })
+const recentGrants = ref<PlayerAchievement[]>([])
+const userId = session.profile?.id
+let objectUrl = '',
+  sequence = 0,
+  searchTimer: ReturnType<typeof setTimeout>,
+  playerTimer: ReturnType<typeof setTimeout>,
+  ownerSequence = 0,
+  playerSequence = 0,
+  hydrating = false
+const draftKey = computed(() => `ch.draft.${userId}.${key.value}`)
+const draft = ref<null | { id: number | null; form: Record<string, string | number> }>(null)
+const dirty = computed(
+  () =>
+    editing.value &&
+    (JSON.stringify(form) !== baseline.value || Boolean(imageFile.value) || removeImage.value),
 )
-function options(source: string) {
-  return source === 'games'
-    ? catalog.games.map((g) => ({ id: g.id, label: g.title }))
-    : source === 'achievements'
-      ? catalog.achievements.map((a) => ({
-          id: a.id,
-          label: `${catalog.games.find((g) => g.id === a.game_id)?.title ?? a.game_id} / ${a.name}`,
-        }))
-      : catalog.levelsSorted.map((l) => ({
-          id: l.id,
-          label: `LV ${l.number} ${l.title}`,
-        }))
+function discardImage() {
+  if (objectUrl) URL.revokeObjectURL(objectUrl)
+  objectUrl = ''
+  imageFile.value = null
+  imagePreview.value = ''
+  if (fileInput.value) fileInput.value.value = ''
 }
-function reset() {
-  Object.keys(form).forEach((k) => delete form[k])
-  for (const field of config.value.fields) form[field.key] = ''
-  editId.value = null
-  preservedRole.value = null
+function close(force = false) {
+  if (dirty.value && !force) {
+    confirmAction.value = () => close(true)
+    return
+  }
+  editing.value = false
+  discardImage()
+  save(draftKey.value, null)
+  draft.value = null
+}
+function fieldError(name: string) {
+  const value = fieldErrors.value[name]
+  return Array.isArray(value) ? value.join(' ') : String(value ?? '')
+}
+function filtersKey() {
+  return `ch.adminFilters.${userId}.${key.value}`
+}
+async function load() {
+  const ticket = ++sequence
+  loading.value = true
   error.value = ''
-  fieldErrors.value = {}
-  if (key.value === 'grants') {
-    const now = new Date()
-    form.acquired_date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+  try {
+    await catalog.load()
+    if (key.value === 'overview') {
+      const [p, l, g] = await Promise.all([
+        api.getPage<Profile>('players', { page_size: 1 }),
+        api.getPage<PlayerGame>('player_games', { page_size: 1 }),
+        api.getPage<PlayerAchievement>('player_achievements', {
+          page_size: 5,
+          ordering: '-acquired_date',
+        }),
+      ])
+      if (ticket !== sequence) return
+      totals.value = { players: p.count, libraries: l.count, grants: g.count }
+      recentGrants.value = g.results
+      rows.value = []
+      count.value = 0
+    } else {
+      const query: Record<string, string | number> = {
+        page: page.value,
+        page_size: 20,
+        search: search.value,
+      }
+      if (gameFilter.value && ['achievements', 'library'].includes(key.value))
+        query.game_id = gameFilter.value
+      const result = await api.getPage<Row>(config.value.resource, query)
+      if (ticket !== sequence) return
+      rows.value = result.results
+      count.value = result.count
+    }
+  } catch (e) {
+    if (ticket === sequence)
+      error.value = e instanceof Error ? e.message : 'Could not load records.'
+  } finally {
+    if (ticket === sequence) loading.value = false
   }
 }
+async function findPlayers() {
+  const ticket = ++playerSequence
+  try {
+    const result = await api.getPage<Profile>('players', {
+      search: playerSearch.value,
+      page_size: 100,
+    })
+    if (ticket === playerSequence) players.value = result.results
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : 'Could not find players.'
+  }
+}
+watch(playerSearch, () => {
+  clearTimeout(playerTimer)
+  playerTimer = setTimeout(() => void findPlayers(), 250)
+})
+watch([search, gameFilter], () => {
+  page.value = 1
+  save(filtersKey(), { search: search.value, game: gameFilter.value })
+  clearTimeout(searchTimer)
+  searchTimer = setTimeout(() => void load(), 200)
+})
+watch(page, () => void load())
 watch(
-  key,
+  [key, () => route.query.game],
   () => {
-    reset()
+    sequence++
+    editing.value = false
+    discardImage()
     message.value = ''
-    search.value = ''
-    gameFilter.value = ''
-    snapshot.value = ''
-    playerId.value = undefined
+    page.value = 1
+    const filters = readSaved<{ search: string; game: string | number }>(filtersKey(), {
+      search: '',
+      game: '',
+    })
+    search.value = filters.search
+    gameFilter.value = String(route.query.game ?? filters.game)
+    draft.value = readSaved(draftKey.value, null)
+    void load()
   },
   { immediate: true },
 )
-function edit(row: Row) {
-  reset()
-  editId.value = row.id
-  for (const field of config.value.fields) form[field.key] = String(row[field.key] ?? '')
+watch(
+  form,
+  () => {
+    if (editing.value && dirty.value && !busy.value) {
+      const safe = { ...form }
+      delete safe.password
+      save(draftKey.value, { id: editId.value, form: safe })
+    }
+  },
+  { deep: true },
+)
+function safeLeave() {
+  if (busy.value) return false
+  if (!dirty.value) return true
+  return new Promise<boolean>((resolve) => {
+    confirmAction.value = () => {
+      close(true)
+      resolve(true)
+    }
+    cancelLeave = () => resolve(false)
+  })
 }
-function loadProfile(profile: Profile) {
-  if (
-    !Number.isInteger(profile.id) ||
-    !Number.isInteger(profile.role) ||
-    !profile.username ||
-    !Number.isInteger(profile.level)
-  )
-    throw new Error('Snapshot needs id, username, role, and level.')
-  editId.value = profile.id
-  playerId.value = profile.id
-  preservedRole.value = profile.role
-  for (const field of config.value.fields)
-    form[field.key] =
-      field.key === 'password' ? '' : String(profile[field.key as keyof Profile] ?? '')
+let cancelLeave: (() => void) | null = null
+function cancelConfirmation() {
+  confirmAction.value = null
+  cancelLeave?.()
+  cancelLeave = null
+}
+function confirmDiscard() {
+  const action = confirmAction.value
+  confirmAction.value = null
+  cancelLeave = null
+  action?.()
+}
+function askDelete(row: Row) {
+  deleting.value = row
+  dependencies.value = {}
   error.value = ''
 }
-function importProfile() {
-  try {
-    loadProfile(JSON.parse(snapshot.value))
-  } catch (e) {
-    error.value = e instanceof Error ? e.message : 'Invalid profile JSON.'
+onBeforeRouteLeave(safeLeave)
+onBeforeRouteUpdate(safeLeave)
+function unload(e: BeforeUnloadEvent) {
+  if (dirty.value) {
+    e.preventDefault()
+    e.returnValue = ''
   }
 }
-function ownProfile() {
-  if (session.profile) loadProfile(session.profile)
+window.addEventListener('beforeunload', unload)
+onUnmounted(() => {
+  discardImage()
+  clearTimeout(searchTimer)
+  clearTimeout(playerTimer)
+  window.removeEventListener('beforeunload', unload)
+})
+async function open(row?: Row, duplicate = false) {
+  hydrating = true
+  discardImage()
+  removeImage.value = false
+  fieldErrors.value = {}
+  error.value = ''
+  editId.value = duplicate ? null : (row?.id ?? null)
+  Object.keys(form).forEach((name) => delete form[name])
+  for (const f of config.value.fields)
+    form[f.key] = row && f.type !== 'password' ? String(row[f.key] ?? '') : ''
+  if (!row && gameFilter.value && key.value === 'achievements') form.game_id = gameFilter.value
+  if (duplicate) form.name = String(form.name).slice(0, 88) + ' (copy)'
+  if (key.value === 'grants' && !row) {
+    const d = new Date()
+    form.acquired_date = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+  }
+  imagePreview.value = String(row?.image_url ?? '')
+  grantGame.value = ''
+  baseline.value = JSON.stringify(form)
+  editing.value = true
+  if (['grants', 'library', 'players'].includes(key.value)) {
+    await findPlayers()
+    if (form.player_id) await ownerChanged()
+    if (key.value === 'players' && row) {
+      form.player_id = row.id
+      await ownerChanged()
+      delete form.player_id
+      baseline.value = JSON.stringify(form)
+    }
+  }
+  hydrating = false
 }
-function showError(e: unknown, deletingRecord = false) {
-  if (e instanceof ApiError) {
-    fieldErrors.value = e.fields
-    error.value =
-      deletingRecord && e.status >= 500
-        ? 'This record may still be referenced. Remove its achievements, grants, or library assignments first, then retry.'
-        : e.message
-  } else error.value = e instanceof Error ? e.message : 'Request failed.'
+async function restore() {
+  const savedDraft = draft.value
+  if (!savedDraft) return
+  await open()
+  editId.value = savedDraft.id
+  Object.assign(form, savedDraft.form)
+  if (key.value === 'games' && editId.value)
+    imagePreview.value = catalog.games.find((g) => g.id === editId.value)?.image_url ?? ''
+  if (form.player_id) await ownerChanged()
+}
+async function ownerChanged() {
+  const id = Number(form.player_id),
+    ticket = ++ownerSequence
+  playerLibrary.value = []
+  playerUnlocks.value = []
+  if (!id) return
+  try {
+    const [library, unlocks] = await Promise.all([
+      request<PlayerGame[]>(`player_games/?player_id=${id}`),
+      request<PlayerAchievement[]>(`player_achievements/?player_id=${id}`),
+    ])
+    if (ticket !== ownerSequence) return
+    playerLibrary.value = library
+    playerUnlocks.value = unlocks
+    if (key.value === 'grants' && form.achievement_id) {
+      const a = catalog.achievements.find((a) => a.id === Number(form.achievement_id))
+      grantGame.value = a?.game_id ?? ''
+    }
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : 'Could not load player progress.'
+  }
+}
+watch(
+  () => form.player_id,
+  () => {
+    if (!hydrating && editing.value && ['grants', 'library'].includes(key.value)) {
+      form.achievement_id = ''
+      grantGame.value = ''
+      void ownerChanged()
+    }
+  },
+)
+const ownedGames = computed(() =>
+  catalog.games.filter((g) => playerLibrary.value.some((l) => l.game_id === g.id)),
+)
+function options(source: string) {
+  if (source === 'players')
+    return players.value.map((p) => ({ value: p.id, label: `${p.username} · #${p.id}` }))
+  if (source === 'games') return catalog.games.map((g) => ({ value: g.id, label: g.title }))
+  if (source === 'levels')
+    return catalog.levelsSorted.map((l) => ({
+      value: l.id,
+      label: `LV ${l.number} · ${l.title} · ${l.exp_required.toLocaleString()} XP`,
+    }))
+  return catalog.achievements
+    .filter(
+      (a) =>
+        a.game_id === Number(grantGame.value) &&
+        (a.id === Number(form.achievement_id) ||
+          !playerUnlocks.value.some((u) => u.achievement_id === a.id)),
+    )
+    .map((a) => ({ value: a.id, label: `${a.name} · ${a.exp_value} XP` }))
+}
+function selectImage(event: Event) {
+  const file = (event.target as HTMLInputElement).files?.[0]
+  if (!file) return
+  discardImage()
+  if (
+    !['image/png', 'image/jpeg', 'image/webp'].includes(file.type) ||
+    file.size > 5 * 1024 * 1024
+  ) {
+    fieldErrors.value.image = ['Choose a PNG, JPG or WebP up to 5 MB.']
+    return
+  }
+  imageFile.value = file
+  objectUrl = URL.createObjectURL(file)
+  imagePreview.value = objectUrl
+  removeImage.value = false
+  delete fieldErrors.value.image
 }
 async function submit() {
-  busy.value = true
-  error.value = ''
   fieldErrors.value = {}
-  message.value = ''
+  error.value = ''
+  for (const f of config.value.fields)
+    if (!f.optional && (form[f.key] === '' || form[f.key] === undefined))
+      fieldErrors.value[f.key] = ['This field is required.']
+  if (Object.keys(fieldErrors.value).length) return
+  busy.value = true
   try {
-    const body: Record<string, string | number> = {}
-    for (const field of config.value.fields) {
-      if (field.key === 'password' && !form.password) continue
-      body[field.key] = field.type === 'number' ? Number(form[field.key]) : (form[field.key] ?? '')
+    const data: Record<string, string | number | boolean> = {}
+    for (const f of config.value.fields) {
+      if (f.type === 'password' && !form[f.key]) continue
+      data[f.key] = f.source || f.type === 'number' ? Number(form[f.key]) : (form[f.key] ?? '')
     }
-    if (key.value === 'players') {
-      if (!editId.value || preservedRole.value === null)
-        throw new Error('Load an existing profile snapshot first.')
-      body.role = preservedRole.value
+    if (key.value === 'games') data.remove_image = removeImage.value
+    let payload: unknown = data
+    if (imageFile.value) {
+      const multipart = new FormData()
+      for (const [name, value] of Object.entries(data)) multipart.append(name, String(value))
+      multipart.append('image', imageFile.value)
+      payload = multipart
     }
-    if (editId.value) await api.updateRecord(config.value.resource, editId.value, body)
-    else await api.createRecord(config.value.resource, body)
-    if (key.value === 'players' && editId.value === session.profile?.id) {
-      const { password: _password, ...profileFields } = body
-      session.profile = { ...session.profile, ...profileFields } as Profile
-      const { save } = await import('@/lib/storage')
-      save('ch.profile', session.profile)
-    }
-    reset()
-    await run()
-    message.value = 'Save complete. Your changes are live.'
+    const resource = key.value === 'players' ? '' : config.value.resource
+    if (editId.value) await api.updateRecord(resource, editId.value, payload)
+    else await api.createRecord(resource, payload)
+    if (key.value === 'players' && editId.value === session.profile?.id) await session.loadProfile()
+    close(true)
+    await catalog.load(true)
+    await load()
+    message.value = 'Saved. Your changes are live.'
   } catch (e) {
-    showError(e)
+    if (e instanceof ApiError) {
+      fieldErrors.value = e.fields
+      error.value = e.message
+    } else error.value = e instanceof Error ? e.message : 'Save failed.'
   } finally {
     busy.value = false
   }
@@ -259,41 +445,72 @@ async function submit() {
 async function remove() {
   if (!deleting.value) return
   busy.value = true
-  error.value = ''
-  message.value = ''
+  dependencies.value = {}
   try {
-    const id = deleting.value.id
-    await api.deleteRecord(config.value.resource, id)
+    await api.deleteRecord(key.value === 'players' ? '' : config.value.resource, deleting.value.id)
     deleting.value = null
-    if (key.value === 'players' && id === session.profile?.id) {
-      window.dispatchEvent(new Event('session-expired'))
-      return
-    }
-    if (editId.value === id) reset()
-    await run()
+    await catalog.load(true)
+    await load()
     message.value = 'Record deleted.'
   } catch (e) {
-    showError(e, true)
-    deleting.value = null
+    if (e instanceof ApiError) {
+      dependencies.value = (e.fields.dependencies as Record<string, number>) ?? {}
+      error.value = e.message
+    } else error.value = e instanceof Error ? e.message : 'Deletion failed.'
   } finally {
     busy.value = false
   }
 }
-const rowName = (row: Row) =>
-  String(row.title ?? row.name ?? (row.player_id ? `Player ${row.player_id}` : `Record ${row.id}`))
+function rowName(row: Row) {
+  if (row.username) return String(row.username)
+  if (row.title || row.name) return String(row.title ?? row.name)
+  if (row.achievement_id)
+    return (
+      catalog.achievements.find((a) => a.id === row.achievement_id)?.name ??
+      `Achievement #${row.achievement_id}`
+    )
+  return catalog.games.find((g) => g.id === row.game_id)?.title ?? `Record #${row.id}`
+}
+function related(row: Row) {
+  if (row.player_id)
+    return `Player #${row.player_id}${row.acquired_date ? ' · ' + row.acquired_date : ''}`
+  if (row.exp_value !== undefined)
+    return `${row.exp_value} XP · ${catalog.games.find((g) => g.id === row.game_id)?.title ?? ''}`
+  if (row.publisher) return String(row.publisher) + ' · ' + String(row.genre)
+  if (row.exp_required !== undefined)
+    return `LV ${row.number} · ${Number(row.exp_required).toLocaleString()} XP`
+  return String(row.email ?? '')
+}
+const emptyGames = computed(() =>
+  catalog.games.filter((g) => !catalog.achievements.some((a) => a.game_id === g.id)),
+)
+const missingArtwork = computed(() => catalog.games.filter((g) => !g.image_url))
+const metadataFlags = computed(() =>
+  catalog.games.filter(
+    (g) =>
+      g.title.toLowerCase().includes('mobile legends') &&
+      (g.publisher === 'Mojang' || g.genre === 'Sandbox'),
+  ),
+)
+const previewXp = computed(() =>
+  playerUnlocks.value.reduce(
+    (sum, u) => sum + (catalog.achievements.find((a) => a.id === u.achievement_id)?.exp_value ?? 0),
+    0,
+  ),
+)
 </script>
 <template>
   <section class="page-content">
     <div class="page-heading">
       <div>
-        <p class="eyebrow">DEVELOPER ACCESS / LEVEL EDITOR</p>
-        <h1>The dev console<span class="red">.</span></h1>
-        <p>Build the worlds. Set the milestones. Reward the players.</p>
+        <p class="eyebrow">CONTROL ROOM / ADMINISTRATOR</p>
+        <h1>Admin console<span class="red">.</span></h1>
+        <p>Manage the catalog. Look after the players.</p>
       </div>
       <span class="admin-stamp">ADMIN ONLY</span>
     </div>
     <div class="dev-layout">
-      <nav class="dev-tools" aria-label="Developer tools">
+      <nav class="dev-tools" aria-label="Admin workspaces">
         <RouterLink
           v-for="(editor, name) in editors"
           :key="name"
@@ -302,151 +519,272 @@ const rowName = (row: Row) =>
           ><span>▸</span>{{ editor.title }}</RouterLink
         >
       </nav>
-      <LoadState :loading="loading" :error="loadError" @retry="run"
-        ><div class="dev-workspace">
-          <p v-if="message" class="success-message" role="status">✓ {{ message }}</p>
-          <p v-if="error" class="field-error" role="alert">{{ error }}</p>
-          <div class="editor-heading">
-            <h2>{{ config.title }}</h2>
-            <button class="text-button" @click="reset">
-              {{ editId ? 'Cancel edit' : 'Clear form' }}
-            </button>
-          </div>
-          <div v-if="key === 'players'" class="profile-import">
-            <p>
-              Player profiles cannot be fetched by this API. Load your own profile or paste an
-              existing profile JSON snapshot to preserve its role.
-            </p>
-            <button @click="ownProfile">Edit my profile</button
-            ><label
-              >Existing profile JSON<textarea
-                v-model="snapshot"
-                placeholder='{"id": 2, "username": "player", "role": 2, "level": 1}'
-              /></label
-            ><button :disabled="!snapshot" @click="importProfile">Load snapshot</button>
-            <div class="player-delete">
-              <label
-                >Player ID to delete<input v-model.number="playerId" type="number" min="1" /></label
-              ><button
-                class="danger"
-                :disabled="!playerId || busy"
-                @click="
-                  deleting = {
-                    id: Number(playerId),
-                    name: `Player ${playerId}`,
-                  }
-                "
-              >
-                Delete player…
-              </button>
+      <div class="dev-workspace">
+        <p v-if="message" class="success-message" role="status">{{ message }}</p>
+        <p v-if="error" class="field-error" role="alert">{{ error }}</p>
+        <template v-if="key === 'overview'">
+          <div class="admin-summary">
+            <div>
+              <strong>{{ catalog.games.length }}</strong
+              ><small>Games</small>
+            </div>
+            <div>
+              <strong>{{ catalog.achievements.length }}</strong
+              ><small>Achievements</small>
+            </div>
+            <div>
+              <strong>{{ totals.players }}</strong
+              ><small>Players</small>
+            </div>
+            <div>
+              <strong>{{ totals.grants }}</strong
+              ><small>Granted achievements</small>
             </div>
           </div>
-          <form class="editor-form" @submit.prevent="submit">
-            <h3>{{ editId ? `EDIT RECORD #${editId}` : 'NEW RECORD' }}</h3>
-            <label v-for="field in config.fields" :key="field.key"
+          <h2>Catalog health</h2>
+          <div class="admin-health">
+            <p v-if="!emptyGames.length && !missingArtwork.length && !metadataFlags.length">
+              All games have artwork and objectives.
+            </p>
+            <p v-for="game in emptyGames" :key="'empty' + game.id">
+              {{ game.title }} has no objectives.
+              <RouterLink :to="`/dev/achievements?game=${game.id}`">Add achievements →</RouterLink>
+            </p>
+            <p v-for="game in missingArtwork" :key="'art' + game.id">
+              {{ game.title }} needs artwork.
+            </p>
+            <p v-for="game in metadataFlags" :key="'meta' + game.id">
+              Review {{ game.title }}: publisher/genre appears inconsistent. Existing metadata is
+              preserved.
+            </p>
+          </div>
+          <h2>Recent grants</h2>
+          <div class="admin-health">
+            <p v-for="grant in recentGrants" :key="grant.id">
+              {{ grant.acquired_date }} · Player #{{ grant.player_id }} ·
+              {{ catalog.achievements.find((a) => a.id === grant.achievement_id)?.name }}
+            </p>
+            <p v-if="!recentGrants.length">No achievements granted yet.</p>
+          </div>
+          <p class="results-count">
+            {{ totals.libraries }} library assignments · Unlocks remain admin-verified.
+          </p>
+        </template>
+        <template v-else>
+          <div class="admin-list-toolbar">
+            <h2>
+              {{ config.title }} <span>({{ count }})</span>
+            </h2>
+            <button v-if="key !== 'players'" class="primary" @click="open()">
+              + New
+              {{
+                config.title === 'Achievements'
+                  ? 'achievement'
+                  : key === 'games'
+                    ? 'game'
+                    : 'record'
+              }}</button
+            ><button v-if="draft" @click="restore">Restore draft</button>
+          </div>
+          <div class="filters">
+            <label
+              >Search<input
+                v-model="search"
+                type="search"
+                :placeholder="`Search ${config.title.toLowerCase()}…`" /></label
+            ><label v-if="['achievements', 'library'].includes(key)"
+              >Game<GameSelect
+                v-model="gameFilter"
+                label="Filter records by game"
+                :options="[{ value: '', label: 'All games' }, ...options('games')]"
+            /></label>
+          </div>
+          <p v-if="loading" role="status">Reading records…</p>
+          <button v-if="error && !editing" @click="load">Retry</button>
+          <div class="record-list" :aria-busy="loading">
+            <article v-for="row in rows" :key="row.id">
+              <GameArtwork
+                v-if="key === 'games'"
+                class="record-thumbnail"
+                :title="rowName(row)"
+                :url="String(row.image_url ?? '')"
+              />
+              <div>
+                <small>#{{ row.id }}</small>
+                <h3>{{ rowName(row) }}</h3>
+                <p>{{ related(row) }}</p>
+                <p v-if="key === 'achievements'">{{ String(row.description).slice(0, 150) }}</p>
+              </div>
+              <div class="record-actions">
+                <button @click="open(row)">Edit</button
+                ><button v-if="key === 'achievements'" @click="open(row, true)">Duplicate</button
+                ><RouterLink
+                  v-if="key === 'games'"
+                  class="button"
+                  :to="`/dev/achievements?game=${row.id}`"
+                  >Objectives</RouterLink
+                ><button
+                  class="danger"
+                  :disabled="busy || (key === 'players' && row.id === session.profile?.id)"
+                  @click="askDelete(row)"
+                >
+                  Delete…
+                </button>
+              </div>
+            </article>
+            <p v-if="!loading && !rows.length" class="inspect-hint">No matching records.</p>
+          </div>
+          <div class="admin-pagination">
+            <button :disabled="page <= 1 || loading" @click="page--">← Previous</button
+            ><span>Page {{ page }} / {{ Math.max(1, Math.ceil(count / 20)) }}</span
+            ><button :disabled="page * 20 >= count || loading" @click="page++">Next →</button>
+          </div>
+        </template>
+      </div>
+    </div>
+    <Modal
+      v-if="editing"
+      :title="
+        editId
+          ? `Edit ${config.title.toLowerCase()} · #${editId}`
+          : `New ${config.title.toLowerCase()}`
+      "
+      @close="!busy && close()"
+    >
+      <div class="admin-editor">
+        <p v-if="error" class="field-error" role="alert">{{ error }}</p>
+        <div v-if="key === 'players'" class="player-overview">
+          <h3>Player progress</h3>
+          <p>
+            {{ playerLibrary.length }} games · {{ playerUnlocks.length }} unlocks ·
+            {{ previewXp.toLocaleString() }} lifetime XP
+          </p>
+          <p>Library: {{ ownedGames.map((g) => g.title).join(', ') || 'Empty' }}</p>
+          <p
+            v-for="unlock in [...playerUnlocks]
+              .sort((a, b) => b.acquired_date.localeCompare(a.acquired_date))
+              .slice(0, 5)"
+            :key="unlock.id"
+          >
+            {{ unlock.acquired_date }} ·
+            {{ catalog.achievements.find((a) => a.id === unlock.achievement_id)?.name }}
+          </p>
+        </div>
+        <form class="editor-form" @submit.prevent="submit">
+          <label v-if="['grants', 'library'].includes(key)" class="game-upload"
+            >Find a player<input
+              v-model="playerSearch"
+              type="search"
+              placeholder="Search username or email…"
+          /></label>
+          <template v-for="field in config.fields" :key="field.key">
+            <label
               >{{ field.label
-              }}<select v-if="field.source" v-model="form[field.key]" required>
-                <option disabled value="">Select {{ field.label.toLowerCase() }}</option>
-                <option v-for="option in options(field.source)" :key="option.id" :value="option.id">
-                  {{ option.label }} (#{{ option.id }})
-                </option></select
-              ><textarea
+              }}<GameSelect
+                v-if="field.source"
+                v-model="form[field.key]!"
+                :label="field.label"
+                :options="options(field.source)"
+                :disabled="busy || (field.source === 'achievements' && !grantGame)"
+              /><textarea
                 v-else-if="field.type === 'textarea'"
                 v-model="form[field.key]"
-                required
+                :required="!field.optional"
+                :disabled="busy"
               /><input
                 v-else
                 v-model="form[field.key]"
                 :type="field.type ?? 'text'"
-                :min="field.type === 'number' ? (field.key === 'player_id' ? 1 : 0) : undefined"
+                :required="!field.optional"
+                :min="field.key === 'number' ? 1 : 0"
                 :step="field.type === 'number' ? 1 : undefined"
-                :list="field.key === 'player_id' ? 'player-ids' : undefined"
-                :required="
-                  !['first_name', 'last_name', 'email', 'image_url'].includes(field.key) &&
-                  !(key === 'players' && field.key === 'password')
-                "
+                :disabled="busy"
                 :autocomplete="field.type === 'password' ? 'new-password' : 'off'"
                 :aria-invalid="Boolean(fieldErrors[field.key])"
               /><small v-if="fieldErrors[field.key]" class="field-error">{{
-                (fieldErrors[field.key] as string[]).join(' ')
+                fieldError(field.key)
               }}</small></label
             >
-            <div v-if="key === 'games' && form.image_url" class="game-image-preview">
-              <GameArtwork
-                :title="String(form.title || 'Game image preview')"
-                :url="String(form.image_url)"
-              />
-              <p>
-                Preview · Paste an official icon or box-art image URL. Leave blank to use a pixel
-                icon.
-              </p>
-            </div>
-            <datalist id="player-ids">
-              <option v-for="id in suggestions" :key="id" :value="id" /></datalist
-            ><button
-              class="primary"
-              :disabled="busy || (key === 'players' && preservedRole === null)"
+            <label v-if="key === 'grants' && field.key === 'player_id'"
+              >Game in this player's library<GameSelect
+                v-model="grantGame"
+                label="Grant game"
+                :options="ownedGames.map((g) => ({ value: g.id, label: g.title }))"
+                :disabled="!form.player_id || busy"
+                @update:model-value="form.achievement_id = ''"
+              /><small v-if="form.player_id && !ownedGames.length"
+                >Add a game in Player libraries first.</small
+              ></label
             >
-              {{ busy ? 'Saving…' : editId ? 'Save changes →' : 'Create record +' }}
-            </button>
-          </form>
-          <template v-if="key !== 'players'"
-            ><div class="filters">
-              <label
-                >Search records<input
-                  v-model="search"
-                  type="search"
-                  placeholder="Search records…" /></label
-              ><label v-if="key === 'achievements' || key === 'library'"
-                >Game<select v-model="gameFilter">
-                  <option value="">All games</option>
-                  <option v-for="game in catalog.games" :key="game.id" :value="game.id">
-                    {{ game.title }}
-                  </option>
-                </select></label
-              >
+          </template>
+          <template v-if="key === 'games'"
+            ><label class="game-upload"
+              >Game artwork<input
+                ref="fileInput"
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+                :disabled="busy"
+                @change="selectImage"
+              /><small>PNG, JPG or WebP · Up to 5 MB / 16 megapixels · Stored locally</small
+              ><small v-if="fieldErrors.image" class="field-error">{{
+                fieldError('image')
+              }}</small></label
+            >
+            <div v-if="imagePreview && !removeImage" class="game-image-preview">
+              <GameArtwork :title="String(form.title || 'Artwork preview')" :url="imagePreview" />
             </div>
-            <div class="record-list">
-              <article v-for="row in rows" :key="row.id">
-                <div>
-                  <small>#{{ row.id }}</small>
-                  <h3>{{ rowName(row) }}</h3>
-                  <p
-                    v-for="field in config.fields.filter(
-                      (f) => f.key !== 'title' && f.key !== 'name',
-                    )"
-                    :key="field.key"
-                  >
-                    <b>{{ field.label }}:</b>
-                    {{
-                      field.source
-                        ? (options(field.source).find((o) => o.id === row[field.key])?.label ??
-                          row[field.key])
-                        : row[field.key]
-                    }}
-                  </p>
-                </div>
-                <div class="record-actions">
-                  <button :disabled="busy" @click="edit(row)">Edit</button
-                  ><button class="danger" :disabled="busy" @click="deleting = row">Delete…</button>
-                </div>
-              </article>
-              <p v-if="!rows.length" class="inspect-hint">No records found.</p>
-            </div></template
+            <label v-if="editId" class="game-upload"
+              ><input v-model="removeImage" type="checkbox" :disabled="busy" /> Remove current
+              artwork</label
+            ></template
           >
-        </div></LoadState
-      >
-    </div>
+          <p v-if="key === 'levels'" class="game-upload results-count">
+            Ranks use lifetime XP. Thresholds must increase with level number. Players below the
+            first threshold remain Unranked.
+          </p>
+          <p v-if="key === 'grants'" class="game-upload results-count">
+            Already unlocked achievements are excluded. A game must be in the selected player's
+            library.
+          </p>
+          <small v-if="fieldErrors.non_field_errors" class="field-error">{{
+            fieldError('non_field_errors')
+          }}</small>
+          <div class="editor-actions">
+            <button class="primary" :disabled="busy">
+              {{ busy ? 'Saving…' : 'Save changes →' }}</button
+            ><button type="button" :disabled="busy" @click="close()">Cancel</button>
+          </div>
+        </form>
+      </div></Modal
+    >
     <Modal
       v-if="deleting"
       :title="`Delete ${rowName(deleting)}?`"
       @close="!busy && (deleting = null)"
-      ><p>This can’t be undone. Referenced records may need to be removed first.</p>
+      ><p>
+        This permanently removes the record. Existing references will block deletion to preserve
+        progress.
+      </p>
+      <p v-if="error" class="field-error" role="alert">{{ error }}</p>
+      <ul v-if="Object.keys(dependencies).length">
+        <li v-for="(n, label) in dependencies" :key="label">{{ n }} {{ label }}</li>
+      </ul>
       <div class="modal-actions">
         <button :disabled="busy" @click="deleting = null">Keep it</button
-        ><button class="danger" :disabled="busy" @click="remove">
+        ><button
+          class="danger"
+          :disabled="busy || Object.keys(dependencies).length > 0"
+          @click="remove"
+        >
           {{ busy ? 'Deleting…' : 'Delete permanently' }}
         </button>
+      </div></Modal
+    >
+    <Modal v-if="confirmAction" title="Discard unsaved changes?" @close="cancelConfirmation"
+      ><p>Your current edits have not been saved.</p>
+      <div class="modal-actions">
+        <button @click="cancelConfirmation">Keep editing</button
+        ><button class="danger" @click="confirmDiscard">Discard changes</button>
       </div></Modal
     >
   </section>

@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import type { ThemeItem } from '@/api/types'
 import PixelIcon from '@/components/ui/PixelIcon.vue'
 import AchievementDetail from './AchievementDetail.vue'
-const props = defineProps<{ items: ThemeItem[] }>()
+const props = defineProps<{ items: ThemeItem[]; completion: { pct: number } }>()
 const feed = computed(() =>
   [...props.items]
     .filter((a) => a.unlocked)
@@ -22,11 +22,11 @@ const feed = computed(() =>
       <div class="kill-feed">
         <h3>YOUR UNLOCK FEED</h3>
         <p v-if="!feed.length">Awaiting your first confirmed achievement.</p>
-        <div v-for="item in feed" :key="item.id">
+        <button v-for="item in feed" :key="item.id" :data-achievement-id="item.id" data-cell>
           <b>YOU</b><span>▸</span><PixelIcon :name="item.name" /><span
             >{{ item.name }}<small>{{ item.acquired_date }}</small></span
           ><strong>+{{ item.exp_value }}</strong>
-        </div>
+        </button>
       </div>
     </div>
     <h3 class="contracts-heading">
@@ -35,12 +35,17 @@ const feed = computed(() =>
     <article
       v-for="item in items.filter((a) => !a.unlocked)"
       :key="item.id"
+      :data-achievement-id="item.id"
+      data-cell
       class="contract"
       tabindex="0"
+      role="button"
+      @keydown.enter="($event.currentTarget as HTMLElement).click()"
+      @keydown.space.prevent="($event.currentTarget as HTMLElement).click()"
     >
       <AchievementDetail :item="item" />
     </article>
-    <p v-if="items.every((a) => a.unlocked)" class="inspect-hint">
+    <p v-if="completion.pct === 100" class="inspect-hint">
       All contracts fulfilled. Mission accomplished.
     </p>
   </div>

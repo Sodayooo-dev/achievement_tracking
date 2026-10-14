@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, provide, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useSession } from '@/stores/session'
 import { usePlayer } from '@/stores/player'
@@ -9,13 +9,18 @@ import LoadState from '@/components/ui/LoadState.vue'
 import AchievementToast from '@/components/fx/AchievementToast.vue'
 import CrtScreen from './CrtScreen.vue'
 import SoundControl from '@/components/ui/SoundControl.vue'
+import { cartridgeControlKey } from '@/lib/cartridgeControl'
 const session = useSession(),
   player = usePlayer(),
   catalog = useCatalog(),
   route = useRoute(),
   router = useRouter()
+const insertionLocked = ref(false)
+provide(cartridgeControlKey, insertionLocked)
+const playing = computed(() => route.path.startsWith('/play/'))
 const { loading, error, run } = useAsync(async () => {
   await catalog.load()
+  await session.loadProfile()
   await player.load()
 })
 watch(
@@ -30,12 +35,16 @@ const nav = computed(() => [
   { path: '/hub', name: 'My library', symbol: '▦' },
   { path: '/catalog', name: 'Game catalog', symbol: '▤' },
   { path: '/history', name: 'Save history', symbol: '◷' },
-  ...(session.isAdmin ? [{ path: '/dev', name: 'Dev console', symbol: '⌘' }] : []),
+  ...(session.isAdmin ? [{ path: '/dev', name: 'Admin console', symbol: '⌘' }] : []),
 ])
 function logout() {
   session.logout()
   player.reset()
   void router.push('/')
+}
+async function refresh() {
+  await catalog.load(true)
+  await run()
 }
 </script>
 <template>
@@ -68,7 +77,18 @@ function logout() {
     </header>
     <main id="main-content" class="console-screen">
       <div class="hardware-strip">
-        <span><i class="led on" /> SYSTEM ONLINE</span><span>CH–001 / PERSONAL SAVE FILE</span>
+        <span><i class="led on" /> SYSTEM ONLINE</span>
+        <button
+          v-if="playing"
+          class="hardware-eject"
+          :disabled="insertionLocked || loading"
+          data-sound="back"
+          aria-label="Eject cartridge and return to library"
+          @click="router.push('/hub')"
+        >
+          <span aria-hidden="true">⏏</span> Eject
+        </button>
+        <span v-else>CH–001 / PERSONAL SAVE FILE</span>
       </div>
       <CrtScreen class="console-glass"
         ><LoadState :loading="loading" :error="error" @retry="run"><slot /></LoadState
@@ -107,7 +127,7 @@ function logout() {
       <button
         class="text-button refresh"
         :disabled="loading"
-        @click="run"
+        @click="refresh"
         aria-label="Refresh save data"
       >
         ↻

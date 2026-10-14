@@ -10,14 +10,28 @@ export const usePlayer = defineStore('player', () => {
     unlocks = ref<PlayerAchievement[]>([])
   const session = useSession(),
     catalog = useCatalog()
+  let generation = 0
+  let pending: Promise<void> | null = null
   async function load() {
+    if (pending) return pending
+    const ticket = ++generation
     const id = session.profile?.id
-    const [games, achievements] = await Promise.all([api.getLibrary(), api.getUnlocks()])
-    if (session.profile?.id !== id) return
-    library.value = games.filter((g) => g.player_id === id)
-    unlocks.value = achievements.filter((a) => a.player_id === id)
+    const task = (async () => {
+      const [games, achievements] = await Promise.all([api.getLibrary(), api.getUnlocks()])
+      if (session.profile?.id !== id || ticket !== generation) return
+      library.value = games.filter((g) => g.player_id === id)
+      unlocks.value = achievements.filter((a) => a.player_id === id)
+    })()
+    pending = task
+    try {
+      await task
+    } finally {
+      if (pending === task) pending = null
+    }
   }
   function reset() {
+    generation++
+    pending = null
     library.value = []
     unlocks.value = []
   }

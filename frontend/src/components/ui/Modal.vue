@@ -1,10 +1,15 @@
+<script lang="ts">
+let openDialogs = 0
+</script>
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, useId } from 'vue'
 defineProps<{ title: string }>()
 const emit = defineEmits<{ close: [] }>()
 const dialog = ref<HTMLElement>()
+const titleId = `modal-title-${useId()}`
 const previous = document.activeElement as HTMLElement | null
 function keys(e: KeyboardEvent) {
+  if (!dialog.value?.contains(document.activeElement)) return
   if (e.key === 'Escape') emit('close')
   if (e.key !== 'Tab') return
   const controls = Array.from(
@@ -22,10 +27,14 @@ function keys(e: KeyboardEvent) {
 }
 onMounted(() => {
   dialog.value?.querySelector<HTMLElement>('button')?.focus()
+  openDialogs++
+  document.getElementById('app')?.setAttribute('inert', '')
   document.addEventListener('keydown', keys)
 })
 onUnmounted(() => {
   document.removeEventListener('keydown', keys)
+  openDialogs--
+  if (!openDialogs) document.getElementById('app')?.removeAttribute('inert')
   previous?.focus()
 })
 </script>
@@ -37,10 +46,10 @@ onUnmounted(() => {
         class="modal"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="modal-title"
+        :aria-labelledby="titleId"
       >
         <button class="modal-close" aria-label="Close dialog" @click="emit('close')">×</button>
-        <h2 id="modal-title">{{ title }}</h2>
+        <h2 :id="titleId">{{ title }}</h2>
         <slot />
       </section></div
   ></Teleport>

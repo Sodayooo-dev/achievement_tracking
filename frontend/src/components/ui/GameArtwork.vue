@@ -4,9 +4,10 @@ import PixelIcon from './PixelIcon.vue'
 const props = defineProps<{ title: string; url?: string }>()
 const failed = ref(false)
 const source = computed(() => {
+  if (props.url?.startsWith('/') && !props.url.startsWith('//')) return props.url
   try {
     const parsed = new URL(props.url ?? '')
-    return ['https:', 'http:'].includes(parsed.protocol) ? parsed.href : ''
+    return ['https:', 'http:', 'blob:'].includes(parsed.protocol) ? parsed.href : ''
   } catch {
     return ''
   }

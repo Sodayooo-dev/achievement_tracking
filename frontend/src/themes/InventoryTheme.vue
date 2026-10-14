@@ -7,7 +7,7 @@ import { gridKeys } from '@/composables/useGridKeys'
 defineProps<{ items: ThemeItem[] }>()
 const selected = ref<ThemeItem | null>(null)
 function keys(event: KeyboardEvent) {
-  gridKeys(event, window.innerWidth < 768 ? 5 : 9)
+  gridKeys(event)
 }
 </script>
 <template>
@@ -19,11 +19,12 @@ function keys(event: KeyboardEvent) {
       <button
         v-for="(item, index) in items"
         :key="item.id"
+        :data-achievement-id="item.id"
         data-cell
         :tabindex="index === 0 ? 0 : -1"
         class="inventory-slot"
         :class="{ unlocked: item.unlocked, selected: selected?.id === item.id }"
-        :aria-label="`${item.unlocked ? item.name : 'Locked achievement'}: ${item.description}`"
+        :aria-label="`${item.name}: ${item.unlocked ? 'Unlocked' : 'Locked'} achievement`"
         @focus="selected = item"
         @mouseenter="selected = item"
         @click="selected = item"
@@ -39,7 +40,7 @@ function keys(event: KeyboardEvent) {
         aria-hidden="true"
       />
     </div>
-    <AchievementDetail v-if="selected" :item="selected" />
-    <p v-else class="inspect-hint">Hover, focus, or tap an item to inspect it.</p>
+
+    <p class="inspect-hint">Hover, focus, or tap an item to inspect it.</p>
   </div>
 </template>

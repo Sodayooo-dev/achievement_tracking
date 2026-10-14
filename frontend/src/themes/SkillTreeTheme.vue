@@ -3,15 +3,16 @@ import { computed, ref } from 'vue'
 import type { ThemeItem } from '@/api/types'
 import PixelIcon from '@/components/ui/PixelIcon.vue'
 import AchievementDetail from './AchievementDetail.vue'
-const props = defineProps<{ items: ThemeItem[] }>(),
+const props = defineProps<{ items: ThemeItem[]; allItems?: ThemeItem[] }>(),
   selected = ref<ThemeItem | null>(null)
 const tiers = computed(() => {
-  const sorted = [...props.items].sort((a, b) => a.exp_value - b.exp_value || a.id - b.id)
+  const sorted = [...(props.allItems ?? props.items)].sort(
+    (a, b) => a.exp_value - b.exp_value || a.id - b.id,
+  )
   return [0, 1, 2].map((tier) =>
-    sorted.slice(
-      Math.ceil((sorted.length * tier) / 3),
-      Math.ceil((sorted.length * (tier + 1)) / 3),
-    ),
+    sorted
+      .slice(Math.ceil((sorted.length * tier) / 3), Math.ceil((sorted.length * (tier + 1)) / 3))
+      .filter((a) => props.items.some((item) => item.id === a.id)),
   )
 })
 </script>
@@ -27,16 +28,16 @@ const tiers = computed(() => {
           <button
             v-for="item in tier"
             :key="item.id"
+            :data-achievement-id="item.id"
+            data-cell
             class="skill-node"
             :class="{ unlocked: item.unlocked }"
-            :aria-label="`${item.unlocked ? item.name : 'Locked achievement'}: ${item.description}`"
+            :aria-label="`${item.name}: ${item.unlocked ? 'Unlocked' : 'Locked'} achievement`"
             @focus="selected = item"
             @mouseenter="selected = item"
             @click="selected = item"
           >
-            <PixelIcon :name="item.name" :locked="!item.unlocked" /><span>{{
-              item.unlocked ? item.name : '???'
-            }}</span
+            <PixelIcon :name="item.name" :locked="!item.unlocked" /><span>{{ item.name }}</span
             ><small>{{ item.exp_value }} XP</small>
           </button>
         </div>
@@ -51,8 +52,8 @@ const tiers = computed(() => {
         </svg>
       </div>
     </div>
-    <AchievementDetail v-if="selected" :item="selected" />
-    <p class="inspect-hint" v-else>
+
+    <p class="inspect-hint">
       Explore a node to see its objective. Tiers show XP value, not prerequisites.
     </p>
   </div>
