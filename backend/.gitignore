@@ -5,3 +5,5 @@
 
 # Egnoree ol migrations/0** initial.py :)
 **/**/**0**.py
+!games/migrations/0002_games_image_url.py
+!games/migrations/0003_games_image.py

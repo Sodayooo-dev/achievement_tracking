@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 from games.models import Games
@@ -16,7 +17,7 @@ class GamesList(APIView):
         return Response(serializer.data)
 
 class GamesCreate(APIView):
-    permission_classes = [IsAdmin]
+    permission_classes = [IsAuthenticated, IsAdmin]
     def post(self,request):
         serializer = GameSerializer(data=request.data)
         if serializer.is_valid():
@@ -41,7 +42,7 @@ class GamesDetail(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class GamesUpdate(APIView):
-    permission_classes = [IsAdmin]
+    permission_classes = [IsAuthenticated, IsAdmin]
     def put(self,request,pk):
         try:
             game = Games.objects.get(pk=pk)
